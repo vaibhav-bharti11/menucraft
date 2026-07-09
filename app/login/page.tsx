@@ -37,20 +37,20 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-sm px-6 animate-slide-up">
         {/* Logo */}
         <div className="text-center mb-10">
-          <h1 className="font-display text-5xl font-semibold italic text-transparent bg-clip-text bg-gradient-to-b from-white to-[#FAF7F2] tracking-wide"
-            style={{ textShadow: '0 0 50px rgba(139,26,26,0.3)' }}>
+          <h1 className="font-display text-5xl font-semibold italic text-[#8B1A1A] tracking-wide"
+            style={{ textShadow: '0 2px 10px rgba(139,26,26,0.1)' }}>
             The Embassy
           </h1>
-          <p className="text-[10px] tracking-[0.35em] text-[var(--gold)]/80 uppercase mt-3.5 font-semibold">
+          <p className="text-[10px] tracking-[0.35em] text-[var(--gold)] uppercase mt-3.5 font-semibold">
             Catering · MenuCraft
           </p>
           <div className="h-[1px] bg-gradient-to-r from-transparent via-[#C9A84C]/30 to-transparent mt-6" />
         </div>
 
         {/* Login Card */}
-        <div className="bg-gradient-to-b from-white/[0.04] to-white/[0.01] backdrop-blur-[24px] border border-white/5 rounded-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-          <h2 className="text-white font-body font-semibold text-lg mb-1">Welcome back</h2>
-          <p className="text-[var(--text-grey)] text-xs mb-6">Enter your access password to continue</p>
+        <div className="bg-white border border-gray-150 rounded-2xl p-8 shadow-md">
+          <h2 className="text-gray-900 font-body font-semibold text-lg mb-1">Welcome back</h2>
+          <p className="text-gray-500 text-xs mb-6">Enter your access password to continue</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -91,7 +91,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-white/20 text-[10px] mt-8 tracking-wider uppercase font-medium">
+        <p className="text-center text-gray-400 text-[10px] mt-8 tracking-wider uppercase font-medium">
           MenuCraft v2.0 · The Embassy Catering
         </p>
       </div>

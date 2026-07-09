@@ -74,7 +74,7 @@ export default function MenusPage() {
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 relative z-10">
           <div>
-            <h1 className="font-display text-4xl font-semibold italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-[var(--gold-light)]">Menus</h1>
+            <h1 className="font-display text-4xl font-semibold italic text-gray-900">Menus</h1>
             <p className="text-[var(--text-grey)] text-xs mt-1 uppercase tracking-wider font-semibold">{menus.length} proposals total</p>
           </div>
           <Link href="/menus/new"
@@ -91,7 +91,7 @@ export default function MenusPage() {
           <div className="flex-1 relative">
             <input className="input-field pl-10 py-2.5" placeholder="Search by client or venue…"
               value={search} onChange={e => setSearch(e.target.value)} />
-            <span className="absolute left-3.5 top-3.5 text-white/30 text-sm pointer-events-none">🔍</span>
+            <span className="absolute left-3.5 top-3.5 text-gray-400 text-sm pointer-events-none">🔍</span>
           </div>
           <select className="input-field w-full sm:w-44 py-2.5" value={statusFilter}
             onChange={e => setStatusFilter(e.target.value as MenuStatus | '')}>
@@ -112,13 +112,13 @@ export default function MenusPage() {
           <div className="space-y-3 relative z-10">
             {filtered.map(menu => (
               <div key={menu.id}
-                className="card px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 hover:border-[var(--gold)]/20 group hover:bg-white/1 transition-all duration-200">
+                className="card px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 hover:border-[var(--gold)]/20 group hover:bg-gray-50 transition-all duration-200">
                 <Link href={`/menus/${menu.id}`} className="flex items-center gap-4 flex-1 min-w-0 w-full">
-                  <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-sm bg-gradient-to-br from-white/5 to-white/0 border border-white/10 group-hover:border-[var(--gold)]/30 transition-colors">
-                    <span className="text-[var(--gold)] font-semibold">≡</span>
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-sm bg-gray-50 border border-gray-150 group-hover:border-[var(--gold)]/30 transition-colors">
+                    <span className="text-[#8B1A1A] font-semibold">≡</span>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-white text-sm font-semibold group-hover:text-[var(--gold-light)] transition-colors truncate">
+                    <div className="text-gray-800 text-sm font-semibold group-hover:text-[#8B1A1A] transition-colors truncate">
                       {menu.client_name || 'Unnamed Menu'}
                     </div>
                     <div className="text-[var(--text-grey)] text-xs mt-1 truncate">
@@ -126,9 +126,9 @@ export default function MenusPage() {
                     </div>
                   </div>
                 </Link>
-                <div className="flex items-center justify-between sm:justify-end gap-3.5 flex-shrink-0 w-full sm:w-auto border-t sm:border-t-0 pt-2 sm:pt-0 border-white/5">
+                <div className="flex items-center justify-between sm:justify-end gap-3.5 flex-shrink-0 w-full sm:w-auto border-t sm:border-t-0 pt-2 sm:pt-0 border-gray-100">
                   <div className="flex items-center gap-3">
-                    <span className="text-[var(--text-grey)] text-xs hidden lg:block font-mono bg-white/3 border border-white/5 px-2.5 py-0.5 rounded-md">
+                    <span className="text-[var(--text-grey)] text-xs hidden lg:block font-mono bg-gray-50 border border-gray-150 px-2.5 py-0.5 rounded-md">
                       {menu.counters.length} counters
                     </span>
                     <span className={`status-badge ${STATUS_CSS[menu.status]}`}>{STATUS_LABELS[menu.status]}</span>

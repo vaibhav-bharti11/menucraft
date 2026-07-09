@@ -75,11 +75,11 @@ export default function AdminPage() {
 
         <div className="flex items-center justify-between mb-6 relative z-10">
           <div>
-            <h1 className="font-display text-4xl font-semibold italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-[var(--gold-light)]">Admin Panel</h1>
+            <h1 className="font-display text-4xl font-semibold italic text-gray-900">Admin Panel</h1>
             <p className="text-[var(--text-grey)] text-sm mt-1">Manage counter types, branding, and system settings</p>
           </div>
           <button onClick={() => setShowAdd(true)}
-            className="btn-secondary text-xs py-2">+ Add Counter Type</button>
+            className="btn-secondary text-[#8B1A1A] border-[#8B1A1A]/35 hover:bg-[#8B1A1A]/5 text-xs py-2 font-bold">+ Add Counter Type</button>
         </div>
 
         <div className="gold-rule mb-8" />
@@ -96,7 +96,7 @@ export default function AdminPage() {
             <div className="space-y-6">
               {categories.map(category => (
                 <div key={category} className="space-y-2.5">
-                  <div className="text-[9px] uppercase tracking-[0.18em] text-white/40 font-semibold px-1">
+                  <div className="text-[10px] uppercase tracking-[0.18em] text-gray-500 font-bold px-1">
                     {category}
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -106,21 +106,21 @@ export default function AdminPage() {
                           <div className="space-y-4 w-full">
                             <div className="grid grid-cols-2 gap-3">
                               <div>
-                                <label className="text-[9px] text-white/50 uppercase tracking-wider mb-1 block">Display Name</label>
-                                <input className="input-field py-1.5 text-xs"
+                                <label className="text-[10px] text-gray-400 uppercase tracking-wider mb-1 block font-bold">Display Name</label>
+                                <input className="input-field py-1.5 text-xs bg-gray-50 focus:bg-white"
                                   value={editForm.display_name ?? ''}
                                   onChange={e => setEditForm(f => ({ ...f, display_name: e.target.value }))} />
                               </div>
                               <div>
-                                <label className="text-[9px] text-white/50 uppercase tracking-wider mb-1 block">Category</label>
-                                <input className="input-field py-1.5 text-xs"
+                                <label className="text-[10px] text-gray-400 uppercase tracking-wider mb-1 block font-bold">Category</label>
+                                <input className="input-field py-1.5 text-xs bg-gray-50 focus:bg-white"
                                   value={editForm.category ?? ''}
                                   onChange={e => setEditForm(f => ({ ...f, category: e.target.value }))} />
                               </div>
                             </div>
                             <div>
-                              <label className="text-[9px] text-white/50 uppercase tracking-wider mb-1 block">Default Description</label>
-                              <textarea className="input-field text-xs resize-none" rows={2}
+                              <label className="text-[10px] text-gray-400 uppercase tracking-wider mb-1 block font-bold">Default Description</label>
+                              <textarea className="input-field text-xs resize-none bg-gray-50 focus:bg-white" rows={2}
                                 value={editForm.default_description ?? ''}
                                 onChange={e => setEditForm(f => ({ ...f, default_description: e.target.value }))} />
                             </div>
@@ -133,18 +133,18 @@ export default function AdminPage() {
                             </div>
                           </div>
                         ) : (
-                          <div className="flex items-start justify-between gap-4 h-full">
+                          <div className="flex items-start justify-between gap-4 h-full bg-white">
                             <div className="flex-1 min-w-0">
-                              <div className="text-white text-sm font-semibold tracking-wide">{ct.display_name}</div>
-                              <div className="text-[var(--text-grey)] text-xs mt-2 line-clamp-2 italic leading-relaxed">{ct.default_description}</div>
+                              <div className="text-gray-800 text-sm font-semibold tracking-wide">{ct.display_name}</div>
+                              <div className="text-gray-500 text-xs mt-2 line-clamp-2 italic leading-relaxed">{ct.default_description}</div>
                             </div>
                             <div className="flex flex-col items-end justify-between h-full min-h-[4.5rem] flex-shrink-0">
                               <button onClick={() => handleToggleActive(ct)}
-                                className={`text-[10px] uppercase tracking-wider font-semibold py-1 px-2.5 rounded transition-all duration-200 ${ct.is_active ? 'bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-green-500/10 hover:text-green-400 hover:border-green-500/20'}`}>
+                                className={`text-[10px] uppercase tracking-wider font-semibold py-1 px-2.5 rounded transition-all duration-200 ${ct.is_active ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200' : 'bg-red-50 text-red-700 border border-red-200 hover:bg-green-50 hover:text-green-700 hover:border-green-200'}`}>
                                 {ct.is_active ? 'Active' : 'Inactive'}
                               </button>
                               <button onClick={() => handleEdit(ct)}
-                                className="btn-ghost text-[10px] py-1 px-2.5 hover:text-[var(--gold)] font-medium">Edit</button>
+                                className="btn-ghost text-[10px] py-1 px-2.5 hover:text-[#8B1A1A] font-semibold">Edit</button>
                             </div>
                           </div>
                         )}
@@ -159,28 +159,28 @@ export default function AdminPage() {
 
         {/* Add Counter Type Modal */}
         {showAdd && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
-            <div className="bg-[#120608]/95 backdrop-blur-[32px] border border-white/10 rounded-2xl p-6 w-full max-w-md mx-4 shadow-[0_0_50px_rgba(0,0,0,0.7)] animate-slide-up">
-              <div className="flex items-center justify-between mb-5 pb-3 border-b border-white/5">
-                <h3 className="font-display text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-[var(--gold-light)]">New Counter Type</h3>
-                <button onClick={() => setShowAdd(false)} className="text-white/40 hover:text-white text-2xl transition-colors">&times;</button>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-md mx-4 shadow-xl animate-slide-up">
+              <div className="flex items-center justify-between mb-5 pb-3 border-b border-gray-150">
+                <h3 className="font-display text-xl font-semibold text-gray-900">New Counter Type</h3>
+                <button onClick={() => setShowAdd(false)} className="text-gray-400 hover:text-gray-600 text-2xl transition-colors">&times;</button>
               </div>
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] text-white/50 uppercase tracking-wider block font-medium">Display Name *</label>
-                  <input className="input-field" placeholder="e.g. Live Taco Bar"
+                  <label className="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">Display Name *</label>
+                  <input className="input-field bg-gray-50 focus:bg-white" placeholder="e.g. Live Taco Bar"
                     value={newForm.display_name ?? ''}
                     onChange={e => setNewForm(f => ({ ...f, display_name: e.target.value }))} />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] text-white/50 uppercase tracking-wider block font-medium">Category</label>
-                  <input className="input-field" placeholder="e.g. Latin Live"
+                  <label className="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">Category</label>
+                  <input className="input-field bg-gray-50 focus:bg-white" placeholder="e.g. Latin Live"
                     value={newForm.category ?? ''}
                     onChange={e => setNewForm(f => ({ ...f, category: e.target.value }))} />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] text-white/50 uppercase tracking-wider block font-medium">Default Description</label>
-                  <textarea className="input-field resize-none py-2" rows={3}
+                  <label className="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">Default Description</label>
+                  <textarea className="input-field resize-none py-2 bg-gray-50 focus:bg-white" rows={3}
                     placeholder="Editorial description for client PDF"
                     value={newForm.default_description ?? ''}
                     onChange={e => setNewForm(f => ({ ...f, default_description: e.target.value }))} />
@@ -201,27 +201,27 @@ export default function AdminPage() {
         <div className="mt-12 relative z-10">
           <div className="gold-rule mb-6" />
           <h2 className="font-body font-semibold text-[var(--gold)]/80 text-xs uppercase tracking-[0.2em] mb-5">Branding & Settings</h2>
-          <div className="card p-6 bg-gradient-to-b from-white/[0.02] to-white/[0.01]">
+          <div className="card p-6 bg-white border border-gray-150">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
                 { label: 'Heritage Crimson', hex: '#8B1A1A', sample: true },
                 { label: 'Gold Accent', hex: '#C9A84C', sample: true },
                 { label: 'Ivory Parchment', hex: '#FAF7F2', sample: true },
               ].map(token => (
-                <div key={token.label} className="flex items-center gap-3.5 p-3 rounded-xl bg-white/[0.01] border border-white/5">
-                  <div className="w-10 h-10 rounded-lg border border-white/10 flex-shrink-0"
+                <div key={token.label} className="flex items-center gap-3.5 p-3 rounded-xl bg-gray-50 border border-gray-150">
+                  <div className="w-10 h-10 rounded-lg border border-gray-200 flex-shrink-0"
                     style={{ background: token.hex }} />
                   <div>
-                    <div className="text-white text-xs font-semibold">{token.label}</div>
-                    <div className="text-[var(--text-grey)] text-[10px] font-mono mt-0.5">{token.hex}</div>
+                    <div className="text-gray-800 text-xs font-semibold">{token.label}</div>
+                    <div className="text-gray-400 text-[10px] font-mono mt-0.5">{token.hex}</div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-6 pt-5 border-t border-white/5 flex items-center justify-between">
+            <div className="mt-6 pt-5 border-t border-gray-150 flex items-center justify-between">
               <div>
-                <div className="text-[10px] text-white/40 uppercase tracking-wider mb-1 font-semibold">Default Sign-Off</div>
-                <p className="text-white text-xs font-semibold">Pranay Bahl · 9899004852</p>
+                <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-1 font-bold">Default Sign-Off</div>
+                <p className="text-gray-850 text-xs font-semibold">Pranay Bahl · 9899004852</p>
               </div>
               <p className="text-[var(--text-grey)] text-[10px] italic">Can be edited inside the builder per event</p>
             </div>

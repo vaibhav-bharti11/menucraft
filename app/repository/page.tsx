@@ -9,18 +9,18 @@ const COURSE_OPTIONS = ['Starter', 'Soup', 'Main', 'Dessert', 'Bread', 'Beverage
 
 function DishCard({ dish, onEdit }: { dish: Dish; onEdit: (d: Dish) => void }) {
   return (
-    <div className="card p-5 hover:border-[var(--gold)]/30 transition-all duration-300 hover:scale-card group relative flex flex-col justify-between h-full">
+    <div className="card p-5 hover:border-[var(--gold)]/30 transition-all duration-300 hover:scale-card group relative flex flex-col justify-between h-full bg-white">
       <div>
         <div className="flex items-start justify-between mb-2">
           <div className="flex-1 min-w-0 pr-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-white text-sm font-semibold leading-tight">{dish.name}</span>
+              <span className="text-gray-900 text-sm font-semibold leading-tight">{dish.name}</span>
               {dish.is_signature && (
                 <span className="badge-signature text-[9px] py-0.5 px-2">★ Signature</span>
               )}
             </div>
             {dish.description && (
-              <p className="text-[var(--text-grey)] text-xs mt-2 leading-relaxed line-clamp-2 italic">
+              <p className="text-gray-500 text-xs mt-2 leading-relaxed line-clamp-2 italic">
                 {dish.description}
               </p>
             )}
@@ -34,10 +34,10 @@ function DishCard({ dish, onEdit }: { dish: Dish; onEdit: (d: Dish) => void }) {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/5">
+      <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
         <div className="flex flex-wrap gap-1.5">
           {dish.cuisine_tags.slice(0, 2).map(t => (
-            <span key={t} className="text-[10px] px-2 py-0.5 rounded-md bg-white/3 text-[var(--text-grey)] border border-white/5 font-medium">
+            <span key={t} className="text-[10px] px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 border border-gray-150 font-medium">
               {t}
             </span>
           ))}
@@ -48,7 +48,7 @@ function DishCard({ dish, onEdit }: { dish: Dish; onEdit: (d: Dish) => void }) {
           ))}
         </div>
         <button onClick={() => onEdit(dish)}
-          className="opacity-0 group-hover:opacity-100 text-xs text-[var(--gold)] hover:text-[var(--gold-light)] transition-all duration-200 font-medium">
+          className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-xs text-[var(--gold)] hover:text-[var(--gold-light)] transition-all duration-200 font-medium">
           Edit
         </button>
       </div>
@@ -56,10 +56,19 @@ function DishCard({ dish, onEdit }: { dish: Dish; onEdit: (d: Dish) => void }) {
   );
 }
 
-function AddDishModal({ onClose, onSave }: { onClose: () => void; onSave: (d: Partial<Dish>) => Promise<void> }) {
+function AddDishModal({ 
+  onClose, 
+  onSave,
+  dishToEdit
+}: { 
+  onClose: () => void; 
+  onSave: (d: Partial<Dish>) => Promise<void>;
+  dishToEdit?: Dish;
+}) {
   const [form, setForm] = useState<Partial<Dish>>({
     dietary: 'VEG', is_signature: false, is_active: true,
     cuisine_tags: [], course_tags: [], counter_type_ids: [],
+    ...dishToEdit
   });
   const [saving, setSaving] = useState(false);
 
@@ -77,7 +86,7 @@ function AddDishModal({ onClose, onSave }: { onClose: () => void; onSave: (d: Pa
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
       <div className="bg-[var(--bg-card)] border border-[var(--border)]/30 rounded-2xl p-6 w-full max-w-lg mx-4 shadow-panel animate-slide-up">
         <div className="flex items-center justify-between mb-5">
-          <h3 className="font-display text-xl font-semibold text-white">Add New Dish</h3>
+          <h3 className="font-display text-xl font-semibold text-white">{dishToEdit ? 'Edit Dish' : 'Add New Dish'}</h3>
           <button onClick={onClose} className="text-[var(--text-grey)] hover:text-white text-xl">×</button>
         </div>
 
@@ -133,7 +142,7 @@ function AddDishModal({ onClose, onSave }: { onClose: () => void; onSave: (d: Pa
           <button onClick={handleSave} disabled={!form.name || saving}
             className="btn-primary flex-1 disabled:opacity-50"
             style={{ background: 'linear-gradient(135deg, #8B1A1A, #b91c1c)' }}>
-            {saving ? 'Saving…' : 'Add Dish'}
+            {saving ? 'Saving…' : (dishToEdit ? 'Save Changes' : 'Add Dish')}
           </button>
         </div>
       </div>
@@ -147,6 +156,7 @@ export default function RepositoryPage() {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<DishFilters>({ is_active: true });
   const [showAdd, setShowAdd] = useState(false);
+  const [editingDish, setEditingDish] = useState<Dish | null>(null);
 
   const fetchDishes = () => {
     fetch('/api/dishes').then(r => r.json()).then(data => {
@@ -177,10 +187,14 @@ export default function RepositoryPage() {
   }, [dishes, search, filters, fuse]);
 
   const handleSave = async (form: Partial<Dish>) => {
-    await fetch('/api/dishes', {
-      method: 'POST',
+    const isEdit = !!form.id;
+    const url = '/api/dishes';
+    const method = isEdit ? 'PATCH' : 'POST';
+
+    await fetch(url, {
+      method: method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, created_by: 'Admin' }),
+      body: JSON.stringify(isEdit ? form : { ...form, created_by: 'Admin' }),
     });
     fetchDishes();
   };
@@ -190,7 +204,7 @@ export default function RepositoryPage() {
 
   return (
     <AppShell>
-      <div className="flex flex-col lg:flex-row h-full animate-fade-in relative">
+      <div className="flex flex-col lg:flex-row lg:h-full min-h-screen lg:min-h-0 animate-fade-in relative">
         {/* Filters Sidebar */}
         <aside className="w-full lg:w-56 flex-shrink-0 border-b lg:border-b-0 lg:border-r border-white/5 p-5 bg-gradient-to-b from-[#110608] to-[#16080b]">
           <h3 className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--gold)]/80 mb-5">Filters</h3>
@@ -256,7 +270,7 @@ export default function RepositoryPage() {
         </aside>
 
         {/* Main content */}
-        <div className="flex-1 flex flex-col overflow-hidden bg-gradient-to-br from-[#0c0507] via-[#0A0405] to-[#120608]">
+        <div className="flex-1 flex flex-col lg:overflow-hidden bg-gradient-to-br from-[#0c0507] via-[#0A0405] to-[#120608]">
           {/* Header */}
           <div className="px-6 py-6 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-transparent via-[#8B1A1A]/3 to-transparent">
             <div>
@@ -281,7 +295,7 @@ export default function RepositoryPage() {
           </div>
 
           {/* Grid */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 lg:overflow-y-auto p-6 pb-20 lg:pb-6">
             {loading ? (
               <div className="text-[var(--text-grey)] text-sm">Loading repository…</div>
             ) : filtered.length === 0 ? (
@@ -292,7 +306,7 @@ export default function RepositoryPage() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                 {filtered.map(dish => (
-                  <DishCard key={dish.id} dish={dish} onEdit={() => {}} />
+                  <DishCard key={dish.id} dish={dish} onEdit={(d) => setEditingDish(d)} />
                 ))}
               </div>
             )}
@@ -302,6 +316,10 @@ export default function RepositoryPage() {
 
       {showAdd && (
         <AddDishModal onClose={() => setShowAdd(false)} onSave={handleSave} />
+      )}
+
+      {editingDish && (
+        <AddDishModal dishToEdit={editingDish} onClose={() => setEditingDish(null)} onSave={handleSave} />
       )}
     </AppShell>
   );

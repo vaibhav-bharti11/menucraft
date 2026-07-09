@@ -11,17 +11,23 @@ function formatEventDate(dateStr: string): string {
 
 function renderModernSections(counter: MenuCounter): string {
   return counter.sections.map(section => {
-    return section.dishes.map(d => {
-      const dotColor = section.kind === 'NON_VEG' ? '#8B1A1A' : '#2E7D32';
-      return `
-      <div class="dish-row">
-        <span class="dot" style="background:${dotColor}"></span>
-        <div class="dish-content">
-          <div class="dish-name">${d.name}</div>
-          ${d.description ? `<div class="dish-desc">${d.description}</div>` : ''}
+    if (section.dishes.length === 0) return '';
+    const sectionLabel = section.label || (section.kind === 'NON_VEG' ? 'Non Vegetarian' : 'Vegetarian');
+    const dishesHtml = section.dishes.map(d => `
+      <div class="dish-block">
+        <div class="dish-name">${d.name}</div>
+        ${d.description ? `<div class="dish-desc">${d.description}</div>` : ''}
+      </div>
+    `).join('');
+
+    return `
+      <div class="section-block">
+        <div class="section-title">${sectionLabel}</div>
+        <div class="dishes-list">
+          ${dishesHtml}
         </div>
-      </div>`;
-    }).join('');
+      </div>
+    `;
   }).join('');
 }
 
@@ -36,6 +42,9 @@ function renderModernAccompaniments(counter: MenuCounter): string {
 }
 
 function renderModernCounter(counter: MenuCounter): string {
+  const hasDishes = counter.sections.some(s => s.dishes.length > 0);
+  if (!hasDishes) return '';
+
   return `
     <div class="counter-block">
       <div class="counter-title">${counter.display_name}</div>
@@ -72,7 +81,7 @@ export function buildModernHtml(menu: Menu): string {
 
     @page {
       size: A4 portrait;
-      margin: 28mm 36mm;
+      margin: 28mm 32mm;
     }
 
     @media print {
@@ -83,7 +92,7 @@ export function buildModernHtml(menu: Menu): string {
         print-color-adjust: exact;
       }
       .signoff {
-        border-top: 1pt solid #C9A84C !important;
+        border-top: 0.5pt solid rgba(201, 168, 76, 0.3) !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
@@ -94,56 +103,68 @@ export function buildModernHtml(menu: Menu): string {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      padding-bottom: 16pt;
-      border-bottom: 1pt solid #C9A84C;
-      margin-bottom: 40pt;
+      padding-bottom: 14pt;
+      border-bottom: 0.5pt solid rgba(201, 168, 76, 0.3);
+      margin-bottom: 30pt;
     }
 
     .wordmark-embassy {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
-      font-size: 22pt;
+      font-size: 24pt;
       font-weight: 600;
       color: #8B1A1A;
     }
     .wordmark-est {
-      font-size: 7pt;
-      letter-spacing: 0.18em;
+      font-size: 7.5pt;
+      letter-spacing: 0.22em;
       color: #888;
       margin-top: 3pt;
-      font-weight: 400;
+      font-weight: 500;
+      text-transform: uppercase;
     }
 
-    .client-info { text-align: right; }
-    .client-name {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 16pt;
-      font-weight: 600;
-      color: #1A1A1A;
+    /* ── Proposal Title Block ─────────────────────────────────── */
+    .proposal-title-block {
+      margin-bottom: 32pt;
+      margin-top: 10pt;
     }
-    .event-meta {
-      font-size: 9pt;
-      color: #888;
-      margin-top: 4pt;
-      line-height: 1.6;
+    .proposal-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-size: 8.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+      color: #C9A84C;
+      display: block;
+      margin-bottom: 4pt;
+    }
+    .proposal-client-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 28pt;
+      font-weight: 300;
+      color: #1A1A1A;
+      line-height: 1.1;
+      font-style: italic;
     }
 
     /* ── Event Details Block ──────────────────────────────────── */
     .event-details {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4pt 32pt;
-      margin-bottom: 40pt;
-      padding-bottom: 28pt;
-      border-bottom: 1pt solid #D4C4A8;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16pt;
+      margin-bottom: 35pt;
+      padding: 14pt 0;
+      border-top: 0.5pt solid rgba(201, 168, 76, 0.2);
+      border-bottom: 0.5pt solid rgba(201, 168, 76, 0.2);
     }
     .detail-item .d-label {
       font-size: 7pt;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #8B1A1A;
       font-weight: 600;
-      margin-bottom: 2pt;
+      margin-bottom: 3pt;
     }
     .detail-item .d-value {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -154,28 +175,25 @@ export function buildModernHtml(menu: Menu): string {
 
     /* ── Counter Blocks ───────────────────────────────────────── */
     .counter-block {
-      margin-bottom: 32pt;
-      padding-bottom: 28pt;
-      border-bottom: 1pt solid #D4C4A8;
-    }
-    .counter-block:last-child {
-      border-bottom: none;
+      margin-bottom: 28pt;
+      padding-bottom: 8pt;
+      page-break-inside: avoid;
     }
 
     .counter-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 14pt;
-      font-weight: 500;
+      font-size: 17pt;
+      font-weight: 400;
       color: #8B1A1A;
-      margin-bottom: 4pt;
-      letter-spacing: 0.01em;
+      margin-bottom: 3pt;
+      letter-spacing: 0.02em;
     }
 
     .counter-desc {
       font-size: 9pt;
-      color: #888;
+      color: #777;
       font-style: italic;
-      margin-bottom: 2pt;
+      margin-bottom: 4pt;
       line-height: 1.5;
     }
 
@@ -183,75 +201,95 @@ export function buildModernHtml(menu: Menu): string {
       width: 100%;
       height: 1pt;
       background: linear-gradient(90deg, #C9A84C, transparent);
-      margin: 10pt 0 14pt;
+      margin: 8pt 0 10pt;
+    }
+
+    /* ── Section Blocks (Veg / Non-Veg grouping) ──────────────── */
+    .section-block {
+      margin-bottom: 16pt;
+    }
+    .section-block:last-of-type {
+      margin-bottom: 8pt;
+    }
+    .section-title {
+      font-family: 'Jost', sans-serif;
+      font-size: 7.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: #C9A84C;
+      margin-bottom: 8pt;
+      margin-top: 14pt;
     }
 
     /* ── Dish Rows ────────────────────────────────────────────── */
-    .dish-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12pt;
-      margin-bottom: 12pt;
+    .dishes-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10pt;
+      padding-left: 2pt;
     }
 
-    .dot {
-      width: 6pt;
-      height: 6pt;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 4pt;
+    .dish-block {
+      page-break-inside: avoid;
     }
-
-    .dish-content { flex: 1; }
 
     .dish-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 11pt;
+      font-size: 12pt;
       font-weight: 600;
       color: #1A1A1A;
+      line-height: 1.25;
     }
 
     .dish-desc {
-      font-size: 9pt;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 9.5pt;
       font-style: italic;
-      color: #888;
-      margin-top: 1pt;
-      line-height: 1.5;
+      color: #666;
+      margin-top: 1.5pt;
+      line-height: 1.45;
+      padding-left: 8pt;
     }
 
     /* ── Accompaniments ───────────────────────────────────────── */
     .modern-accompaniments {
-      margin-top: 10pt;
-      padding-top: 8pt;
+      margin-top: 14pt;
+      padding-top: 10pt;
+      border-top: 0.5pt dashed rgba(0, 0, 0, 0.08);
+      font-size: 9pt;
     }
     .acc-label {
-      font-size: 9pt;
       font-weight: 600;
       color: #8B1A1A;
       margin-right: 6pt;
+      font-size: 8.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
     .acc-items {
-      font-size: 9pt;
-      color: #888;
+      color: #666;
+      font-style: italic;
     }
 
     /* ── Sign-off ─────────────────────────────────────────────── */
     .signoff {
       margin-top: 40pt;
       text-align: right;
-      border-top: 1pt solid #C9A84C;
+      border-top: 0.5pt solid rgba(201, 168, 76, 0.3);
       padding-top: 16pt;
+      page-break-inside: avoid;
     }
     .signoff-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 13pt;
+      font-size: 14pt;
       font-weight: 500;
       color: #1A1A1A;
     }
     .signoff-contact {
       font-size: 9pt;
       color: #888;
-      margin-top: 2pt;
+      margin-top: 2.5pt;
     }
   </style>
 </head>
@@ -261,16 +299,14 @@ export function buildModernHtml(menu: Menu): string {
   <div class="cover-header">
     <div>
       <div class="wordmark-embassy">The Embassy</div>
-      <div class="wordmark-est">Est. 1948 · Okhla, Delhi NCR</div>
+      <div class="wordmark-est">Est. 1948 · Delhi NCR</div>
     </div>
-    <div class="client-info">
-      <div class="client-name">${menu.client_name}</div>
-      <div class="event-meta">
-        ${eventDate}<br>
-        ${menu.function_type} · ${menu.guest_count}<br>
-        ${menu.venue}
-      </div>
-    </div>
+  </div>
+
+  <!-- PROPOSAL TITLE -->
+  <div class="proposal-title-block">
+    <span class="proposal-eyebrow">Catering Proposal</span>
+    <h1 class="proposal-client-name">${menu.client_name}</h1>
   </div>
 
   <!-- EVENT DETAILS -->

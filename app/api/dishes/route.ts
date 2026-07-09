@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDishes, saveDish, nextDishId } from '@/lib/data';
 import type { Dish } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const dishes = getDishes();
   return NextResponse.json(dishes);

@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCounterTypes, saveCounterType } from '@/lib/data';
 import type { CounterType } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   return NextResponse.json(getCounterTypes());
 }
