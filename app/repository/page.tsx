@@ -190,12 +190,12 @@ export default function RepositoryPage() {
 
   return (
     <AppShell>
-      <div className="flex h-full animate-fade-in relative">
+      <div className="flex flex-col lg:flex-row h-full animate-fade-in relative">
         {/* Filters Sidebar */}
-        <aside className="w-56 flex-shrink-0 border-r border-white/5 p-5 overflow-y-auto bg-gradient-to-b from-[#110608] to-[#16080b]">
+        <aside className="w-full lg:w-56 flex-shrink-0 border-b lg:border-b-0 lg:border-r border-white/5 p-5 bg-gradient-to-b from-[#110608] to-[#16080b]">
           <h3 className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--gold)]/80 mb-5">Filters</h3>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
             <div>
               <label className="text-[10px] text-white/50 uppercase tracking-wider mb-1.5 block">Dietary</label>
               <select className="input-field text-xs py-2"
@@ -226,7 +226,9 @@ export default function RepositoryPage() {
                 {COURSE_OPTIONS.map(c => <option key={c}>{c}</option>)}
               </select>
             </div>
+          </div>
 
+          <div className="mt-4 lg:mt-6">
             <label className="flex items-center gap-2 cursor-pointer pt-2 group">
               <input type="checkbox" checked={filters.is_signature ?? false}
                 onChange={e => setFilters(f => ({ ...f, is_signature: e.target.checked || undefined }))}
@@ -235,7 +237,7 @@ export default function RepositoryPage() {
             </label>
           </div>
 
-          <div className="mt-8 pt-5 border-t border-white/5">
+          <div className="mt-6 lg:mt-8 pt-5 border-t border-white/5">
             <div className="text-xs text-[var(--text-grey)] bg-white/[0.02] border border-white/5 rounded-xl p-4 space-y-2">
               <div className="flex justify-between items-center pb-1.5 border-b border-white/5">
                 <span className="font-medium text-white/60">Showing</span>
@@ -256,15 +258,15 @@ export default function RepositoryPage() {
         {/* Main content */}
         <div className="flex-1 flex flex-col overflow-hidden bg-gradient-to-br from-[#0c0507] via-[#0A0405] to-[#120608]">
           {/* Header */}
-          <div className="px-6 py-6 border-b border-white/5 flex items-center gap-4 bg-gradient-to-r from-transparent via-[#8B1A1A]/3 to-transparent">
-            <div className="flex-1">
+          <div className="px-6 py-6 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-transparent via-[#8B1A1A]/3 to-transparent">
+            <div>
               <h1 className="font-display text-2xl font-semibold italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-[var(--gold-light)]">Dish Repository</h1>
               <p className="text-xs text-[var(--text-grey)] mt-0.5">{dishes.length} dishes total</p>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="relative">
+            <div className="flex items-center gap-3 w-full md:w-auto">
+              <div className="relative flex-1 md:flex-none">
                 <input
-                  className="input-field w-64 pl-9 py-2"
+                  className="input-field w-full md:w-64 pl-9 py-2"
                   placeholder="Search dishes…"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
@@ -288,7 +290,7 @@ export default function RepositoryPage() {
                 <p className="text-sm font-medium">No dishes found. Try adjusting filters.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                 {filtered.map(dish => (
                   <DishCard key={dish.id} dish={dish} onEdit={() => {}} />
                 ))}

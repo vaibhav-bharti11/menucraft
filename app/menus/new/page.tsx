@@ -127,7 +127,7 @@ export default function NewMenuPage() {
 
         <div className="gold-rule mb-8" />
 
-        <div className="grid grid-cols-2 gap-4 mb-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 relative z-10">
           {/* Blank option */}
           <button
             onClick={() => setSelected(null)}

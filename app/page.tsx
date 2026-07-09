@@ -60,7 +60,7 @@ export default function DashboardPage() {
         <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-[var(--crimson)]/5 rounded-full blur-[100px] pointer-events-none" />
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-8 relative z-10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 relative z-10">
           <div>
             <h1 className="font-display text-4xl font-semibold italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-[var(--gold-light)] mb-2">
               Good day, Chef
@@ -70,7 +70,7 @@ export default function DashboardPage() {
             </p>
           </div>
           <button onClick={handleNewMenu}
-            className="btn-primary flex items-center gap-2">
+            className="btn-primary flex items-center justify-center gap-2 self-start sm:self-auto">
             <span className="text-lg font-light">+</span>
             <span>New Menu</span>
           </button>
@@ -92,7 +92,7 @@ export default function DashboardPage() {
           <h2 className="font-body font-semibold text-[var(--gold)]/80 text-xs uppercase tracking-[0.2em] mb-4">
             Quick Actions
           </h2>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {[
               { label: 'New Menu from Template', desc: 'Start with a pre-built layout', icon: '⊕', href: '/menus/new' },
               { label: 'Browse Dish Repository', desc: '1400+ dishes, search instantly', icon: '◈', href: '/repository' },

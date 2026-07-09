@@ -481,38 +481,40 @@ export default function MenuBuilderPage() {
     <AppShell>
       <div className="flex flex-col h-full overflow-hidden">
         {/* Toolbar */}
-        <div className="px-6 py-4.5 border-b border-white/5 flex items-center gap-4 flex-shrink-0 bg-[#110608] relative z-10">
-          <button onClick={() => router.push('/menus')} className="text-white/40 hover:text-white text-sm transition-colors duration-200 flex items-center gap-1">
-            <span>←</span>
-            <span>Menus</span>
-          </button>
-          <div className="h-4 w-[1px] bg-white/10" />
-          <div className="flex-1 flex items-center">
-            <input
-              className="bg-transparent border-none outline-none text-white font-display text-xl italic font-semibold placeholder:text-white/20 w-72 focus:placeholder:opacity-0 transition-opacity"
-              placeholder="Client name…"
-              value={menu.client_name}
-              onChange={e => updateMenu({ client_name: e.target.value })}
-            />
-            {isDirty && (
-              <span className="inline-flex items-center gap-1.5 text-[9px] text-red-400 bg-red-400/5 px-2 py-0.5 rounded border border-red-500/20 font-mono font-semibold ml-3 animate-pulse">
-                ● Unsaved
-              </span>
-            )}
-            {lastSaved && !isDirty && (
-              <span className="inline-flex items-center gap-1.5 text-[9px] text-green-400 bg-green-400/5 px-2 py-0.5 rounded border border-green-500/20 font-mono font-semibold ml-3">
-                ✓ Saved {lastSaved}
-              </span>
-            )}
+        <div className="px-6 py-4.5 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4 flex-shrink-0 bg-[#110608] relative z-10">
+          <div className="flex items-center gap-3 flex-1 min-w-0 w-full">
+            <button onClick={() => router.push('/menus')} className="text-white/40 hover:text-white text-sm transition-colors duration-200 flex items-center gap-1 flex-shrink-0">
+              <span>←</span>
+              <span>Menus</span>
+            </button>
+            <div className="h-4 w-[1px] bg-white/10 flex-shrink-0" />
+            <div className="flex-1 flex items-center min-w-0">
+              <input
+                className="bg-transparent border-none outline-none text-white font-display text-xl italic font-semibold placeholder:text-white/20 w-full focus:placeholder:opacity-0 transition-opacity truncate"
+                placeholder="Client name…"
+                value={menu.client_name}
+                onChange={e => updateMenu({ client_name: e.target.value })}
+              />
+              {isDirty && (
+                <span className="inline-flex items-center gap-1.5 text-[9px] text-red-400 bg-red-400/5 px-2 py-0.5 rounded border border-red-500/20 font-mono font-semibold ml-3 animate-pulse flex-shrink-0">
+                  ● Unsaved
+                </span>
+              )}
+              {lastSaved && !isDirty && (
+                <span className="inline-flex items-center gap-1.5 text-[9px] text-green-400 bg-green-400/5 px-2 py-0.5 rounded border border-green-500/20 font-mono font-semibold ml-3 flex-shrink-0">
+                  ✓ Saved
+                </span>
+              )}
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <select className="input-field py-1.5 text-xs w-36"
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <select className="input-field py-1.5 text-xs flex-1 md:flex-none md:w-36"
               value={menu.status}
               onChange={e => updateMenu({ status: e.target.value as MenuStatus })}>
               {STATUS_FLOW.map(s => <option key={s}>{s}</option>)}
             </select>
-            <div className="flex items-center gap-1.5">
-              <select className="input-field py-1.5 text-xs w-28"
+            <div className="flex items-center gap-1.5 flex-1 md:flex-none">
+              <select className="input-field py-1.5 text-xs w-full md:w-28"
                 value={pdfMode}
                 onChange={e => setPdfMode(e.target.value as 'classic' | 'modern')}>
                 <option value="classic">Classic PDF</option>
@@ -521,19 +523,20 @@ export default function MenuBuilderPage() {
               <button onClick={generatePdf} disabled={generatingPdf}
                 className="btn-secondary text-xs py-1.5 px-3.5 whitespace-nowrap disabled:opacity-50 flex items-center gap-1">
                 <span>{generatingPdf ? '⏳' : '⬇'}</span>
-                <span>Export PDF</span>
+                <span className="hidden sm:inline">Export PDF</span>
+                <span className="inline sm:hidden">Export</span>
               </button>
             </div>
             <button onClick={() => saveMenu(menu)} disabled={saving}
-              className="btn-primary text-xs py-1.5 disabled:opacity-50">
+              className="btn-primary text-xs py-1.5 px-4 disabled:opacity-50 flex-shrink-0">
               {saving ? 'Saving…' : 'Save'}
             </button>
           </div>
         </div>
 
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
           {/* Left panel — Header form */}
-          <aside className="w-72 flex-shrink-0 border-r border-white/5 overflow-y-auto p-5 bg-gradient-to-b from-[#110608] to-[#16080a]">
+          <aside className="w-full lg:w-72 flex-shrink-0 border-b lg:border-b-0 lg:border-r border-white/5 overflow-y-auto p-5 bg-gradient-to-b from-[#110608] to-[#16080a] max-h-[50vh] lg:max-h-none">
             <h3 className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--gold)]/80 mb-5">Event Details</h3>
             <div className="space-y-4">
               {(
