@@ -2,26 +2,255 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Google Fonts ──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600;700&display=swap');
+
+/* ─── Embassy Design Tokens ─────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --crimson: #8B1A1A;
+  --crimson-light: #B82525;
+  --crimson-glow: rgba(139, 26, 26, 0.35);
+  --gold: #C9A84C;
+  --gold-light: #F4E2B5;
+  --gold-glow: rgba(201, 168, 76, 0.2);
+  --ivory: #FAF7F2;
+  --ivory-dark: #f0ebe1;
+  --veg: #10B981;
+  --non-veg: #EF4444;
+  --text-dark: #121212;
+  --text-grey: #9CA3AF;
+  --text-grey-light: #D1D5DB;
+  --text-grey-mid: #6B7280;
+  --border: #D4C4A8;
+  --bg-app: #0A0405;
+  --bg-card: rgba(26, 13, 15, 0.7);
+  --bg-sidebar: #110608;
+  --surface: rgba(34, 18, 26, 0.5);
+  --surface-hover: rgba(45, 24, 32, 0.75);
+  --glass-bg: rgba(18, 8, 10, 0.75);
+  --glass-border: rgba(212, 196, 168, 0.08);
+  --glass-border-focus: rgba(201, 168, 76, 0.45);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─── Base Styles ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Jost', system-ui, sans-serif;
+  background-color: var(--bg-app);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(139, 26, 26, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(201, 168, 76, 0.04) 0%, transparent 40%);
+  color: #FAF7F2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* ─── Custom Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-sidebar); }
+::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.15); border-radius: 4px; border: 1px solid rgba(139, 26, 26, 0.1); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ─── Typography ─────────────────────────────────────────────────────────────── */
+.font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+.font-body { font-family: 'Jost', system-ui, sans-serif; }
+
+/* ─── Embassy Components ─────────────────────────────────────────────────── */
+
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #8B1A1A 0%, #B82525 100%);
+  color: #FAF7F2;
+  font-family: 'Jost', system-ui, sans-serif; font-weight: 500;
+  padding: 0.625rem 1.5rem; border-radius: 0.75rem;
+  font-size: 0.875rem; letter-spacing: 0.03em;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px var(--crimson-glow);
+  position: relative;
+  overflow: hidden;
 }
+.btn-primary::before {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: all 0.6s ease;
+}
+.btn-primary:hover::before { left: 100%; }
+.btn-primary:hover { 
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(139, 26, 26, 0.5), 0 0 12px rgba(201, 168, 76, 0.2); 
+  border-color: rgba(201, 168, 76, 0.3);
+}
+.btn-primary:active { transform: translateY(1px) scale(0.98); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(201, 168, 76, 0.04); color: var(--gold);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  font-family: 'Jost', system-ui, sans-serif; font-weight: 500;
+  padding: 0.625rem 1.5rem; border-radius: 0.75rem;
+  font-size: 0.875rem; letter-spacing: 0.02em;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
+}
+.btn-secondary:hover { 
+  border-color: var(--gold); 
+  background: rgba(201, 168, 76, 0.1); 
+  color: var(--gold-light);
+  box-shadow: 0 0 15px rgba(201, 168, 76, 0.15);
+  transform: translateY(-1px);
+}
+.btn-secondary:active { transform: translateY(1px); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--text-grey);
+  border: 1px solid transparent; font-family: 'Jost', system-ui, sans-serif;
+  padding: 0.5rem 1rem; border-radius: 0.5rem;
+  font-size: 0.875rem; transition: all 0.2s ease; cursor: pointer;
+}
+.btn-ghost:hover { 
+  color: #FAF7F2; 
+  background: rgba(255, 255, 255, 0.04); 
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover {
+  border-color: rgba(201, 168, 76, 0.25);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 15px rgba(139, 26, 26, 0.15);
+}
+
+.badge-veg {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.18rem 0.65rem; border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.08); color: #34d399;
+  font-size: 0.725rem; font-weight: 500;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  letter-spacing: 0.02em;
+}
+
+.badge-nonveg {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.18rem 0.65rem; border-radius: 9999px;
+  background: rgba(239, 68, 68, 0.08); color: #fca5a5;
+  font-size: 0.725rem; font-weight: 500;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  letter-spacing: 0.02em;
+}
+
+.badge-signature {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.18rem 0.65rem; border-radius: 9999px;
+  background: rgba(201, 168, 76, 0.08); color: var(--gold);
+  font-size: 0.725rem; font-weight: 500;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 10px rgba(201, 168, 76, 0.05);
+}
+
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 168, 76, 0.4) 30%, rgba(201, 168, 76, 0.4) 70%, transparent 100%);
+  margin: 1.5rem 0;
+  border: none;
+}
+
+.input-field {
+  background: var(--surface);
+  border: 1px solid rgba(212, 196, 168, 0.15);
+  color: #FAF7F2;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-family: 'Jost', system-ui, sans-serif;
+  width: 100%;
+  outline: none;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.input-field::placeholder { color: rgba(255, 255, 255, 0.3); }
+.input-field:focus { 
+  border-color: var(--glass-border-focus); 
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12), inset 0 1px 2px rgba(0, 0, 0, 0.3); 
+  background: var(--bg-card);
+}
+.input-field option { background: #1a0d0f; color: #FAF7F2; }
+
+.sidebar-nav-item {
+  display: flex; align-items: center; gap: 0.875rem;
+  padding: 0.75rem 1rem; border-radius: 0.75rem;
+  font-size: 0.9rem; color: var(--text-grey);
+  transition: all 0.25s ease; cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.sidebar-nav-item:hover { 
+  color: #FAF7F2; 
+  background: rgba(255, 255, 255, 0.03); 
+  transform: translateX(2px);
+}
+.sidebar-nav-item.active {
+  color: var(--gold-light); 
+  background: linear-gradient(90deg, rgba(201, 168, 76, 0.15) 0%, rgba(201, 168, 76, 0.02) 100%);
+  border-color: rgba(201, 168, 76, 0.25);
+  border-left: 3px solid var(--gold);
+}
+
+.counter-block {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.counter-block:hover { 
+  border-color: rgba(201, 168, 76, 0.2); 
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+.status-badge {
+  font-size: 0.75rem; font-weight: 600;
+  padding: 0.25rem 0.75rem; border-radius: 9999px;
+  display: inline-flex; align-items: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.status-draft { background: rgba(156, 163, 175, 0.1); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.2); }
+.status-ready { background: rgba(59, 130, 246, 0.1); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.2); }
+.status-sent  { background: rgba(245, 158, 11, 0.1); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.2); }
+.status-confirmed { background: rgba(16, 185, 129, 0.1); color: #a7f3d0; border: 1px solid rgba(16, 185, 129, 0.2); }
+.status-archived { background: rgba(31, 41, 55, 0.3); color: #9ca3af; border: 1px solid rgba(31, 41, 55, 0.4); }
+
+/* ─── Animations ─────────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .glass { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+  .embassy-glow { box-shadow: 0 0 50px rgba(139, 26, 26, 0.25); }
+  .gold-glow { box-shadow: 0 0 30px rgba(201, 168, 76, 0.18); }
+}
+
+.hover\:scale-card:hover { transform: translateY(-3px); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(201, 168, 76, 0.1); }
+  50% { box-shadow: 0 0 25px rgba(201, 168, 76, 0.25); }
+}
+
+.animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-slide-in { animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-slide-up { animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-glow-pulse { animation: glowPulse 3s infinite ease-in-out; }

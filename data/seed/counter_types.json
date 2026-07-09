@@ -1,0 +1,372 @@
+[
+ {
+  "id": "arrival-bites",
+  "display_name": "Arrival Bites & Phera Welcome",
+  "category": "Welcome",
+  "default_description": "A curated selection of refined tea-time favourites and warm savouries to welcome guests with com- fort and familiarity. Thoughtfully plated, light yet indulgent bites to set the tone for the celebrations ahead.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 0,
+  "is_active": true
+ },
+ {
+  "id": "passed-hors",
+  "display_name": "Passed Hors D'Oeuvres",
+  "category": "Starters",
+  "default_description": "An elegant parade of handcrafted small plates served warm on pass-around Global flavours along with Indian technique, designed for effortless grazing and conversation.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 1,
+  "is_active": true
+ },
+ {
+  "id": "appetizer-rotation",
+  "display_name": "Appetizer on Rotation",
+  "category": "Starters",
+  "default_description": "A rotating selection of starters served fresh at stations throughout the evening.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 2,
+  "is_active": true
+ },
+ {
+  "id": "chaat-atelier",
+  "display_name": "The Chaat Atelier (Live)",
+  "category": "Street Food",
+  "default_description": "A reimagined Indian street food experience, prepared live with precision and finesse. Classic flavours, elevated presentation, and interactive plating for a playful yet refined indulgence.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 3,
+  "is_active": true
+ },
+ {
+  "id": "grazing-table",
+  "display_name": "Artisan Grazing Table",
+  "category": "Starters",
+  "default_description": "A lavish spread of international cheeses, breads, pâtés, dips, and accompaniments for relaxed, free-flowing nibbling. Perfect for pre-dinner mingling and cocktail conversations, styled for both taste and visual drama.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 4,
+  "is_active": true
+ },
+ {
+  "id": "sushi-bar",
+  "display_name": "Kampai Signature Sushi Bar (Live)",
+  "category": "Asian Live",
+  "default_description": "Hand-rolled sushi prepared live, showcasing Japanese precision and premium ingredients. A delicate balance of freshness, texture, and umami, served with traditional accompaniments.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 5,
+  "is_active": true
+ },
+ {
+  "id": "dimsum-gyoza",
+  "display_name": "Kampai Dim Sum & Gyoza Station (Live)",
+  "category": "Asian Live",
+  "default_description": "Steamed and pan-seared dumplings crafted live, inspired by classic East Asian flavours. Light, aromatic bites with bold fillings, served straight from the steamer for peak freshness.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 6,
+  "is_active": true
+ },
+ {
+  "id": "gyoza-counter",
+  "display_name": "Gyoza Counter (Live)",
+  "category": "Asian Live",
+  "default_description": "Pan-seared gyoza crafted live, served with dipping sauces.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 7,
+  "is_active": true
+ },
+ {
+  "id": "bao-bar",
+  "display_name": "Bao Bar (Live)",
+  "category": "Asian Live",
+  "default_description": "Steamed bao buns filled to order with vegetarian and non-vegetarian fillings.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 8,
+  "is_active": true
+ },
+ {
+  "id": "yakitori-grill",
+  "display_name": "Kampai Yakitori Grill (Live)",
+  "category": "Asian Live",
+  "default_description": "Charcoal-grilled skewers prepared over open flame, echoing the vibrant energy of Japanese street grills. Smoky, succulent proteins and vegetables glazed with signature sauces for irresistible aroma and flavour.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 9,
+  "is_active": true
+ },
+ {
+  "id": "ramen-bar",
+  "display_name": "Kampai Ramen Bar (Live)",
+  "category": "Asian Live",
+  "default_description": "A comforting late-evening noodle bar serving hot, customisable Japanese-style ramen bowls. Slow-simmered broths, fresh noodles, and curated toppings come together for soulful midnight indul- gence.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 10,
+  "is_active": true
+ },
+ {
+  "id": "teppanyaki",
+  "display_name": "Kampai Teppanyaki Grill (Live)",
+  "category": "Asian Live",
+  "default_description": "Interactive Japanese-style grill where proteins and vegetables are seared to order. Bold sauces, high heat, and theatrical plating for a modern Asian dining experience.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 11,
+  "is_active": true
+ },
+ {
+  "id": "carpaccio-ceviche",
+  "display_name": "Japanese Carpaccio & Ceviche Bar",
+  "category": "Asian Fine",
+  "default_description": "A refined cold counter featuring delicately sliced and citrus-cured seafood and vegetables. Freshly dressed with premium oils, herbs, and bright acidity for a light, elegant contrast to warm grills.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 12,
+  "is_active": true
+ },
+ {
+  "id": "skewer-bar",
+  "display_name": "Skewer Bar (Live)",
+  "category": "Asian Live",
+  "default_description": "Indonesian-style skewers grilled live, finished with peanut sauce.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 13,
+  "is_active": true
+ },
+ {
+  "id": "galouti-counter",
+  "display_name": "Galouti Counter (Live)",
+  "category": "Indian Live",
+  "default_description": "Delicate galouti kebabs finished on the mahi tawa, melting on the palate.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 14,
+  "is_active": true
+ },
+ {
+  "id": "sindh-e-punjab",
+  "display_name": "Sindh-e-Punjab (Live)",
+  "category": "Indian Live",
+  "default_description": "Regional Indian charcoal grill — lamb chops, tangri and robust Punjabi flavours.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 15,
+  "is_active": true
+ },
+ {
+  "id": "awadhi-kitchen",
+  "display_name": "Royal Awadhi Kitchen (Live)",
+  "category": "Indian Live",
+  "default_description": "A tribute to the refined culinary traditions of Awed live on the tawa. Delicately spiced kebabs and artisanal breads crafted with old-world finesse and depth of flavour.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 16,
+  "is_active": true
+ },
+ {
+  "id": "levantine",
+  "display_name": "Levantine Kitchen — Middle Eastern",
+  "category": "Middle Eastern",
+  "default_description": "Warm flatbreads, shawarma, falafel, and mezze inspired by the vibrant kitchens of the Levant. Fragrant spices, slow-roasted proteins, and creamy dips for soulful Mediterranean indulgence.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 17,
+  "is_active": true
+ },
+ {
+  "id": "lebanese",
+  "display_name": "Lebanese Counter (Live)",
+  "category": "Middle Eastern",
+  "default_description": "A lighter Levantine spread — mezze, falafel and shawarma carved live.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 18,
+  "is_active": true
+ },
+ {
+  "id": "pizza-oven",
+  "display_name": "Italian Artisan Pizza Oven (Live)",
+  "category": "European Live",
+  "default_description": "Stone-baked gourmet pizzas prepared live with premium toppings and hand-stretched bases. Classic Italian comfort elevated with fresh produce, fine cheeses, and bold flavour combinations.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 19,
+  "is_active": true
+ },
+ {
+  "id": "pizza-counter",
+  "display_name": "Pizza Counter (Live)",
+  "category": "European Live",
+  "default_description": "Stone-baked pizzas prepared live with classic toppings.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 20,
+  "is_active": true
+ },
+ {
+  "id": "mexican-bar",
+  "display_name": "Mexican Bar (Live)",
+  "category": "Latin Live",
+  "default_description": "Fajitas, guacamole and salsas prepared live with Monterey Jack.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 21,
+  "is_active": true
+ },
+ {
+  "id": "soups",
+  "display_name": "Soups & Broths (Live)",
+  "category": "Soup",
+  "default_description": "Comforting, aromatic soups served hot to awaken the palate between courses. A balance of global and Indian classics, crafted for warmth and gentle indulgence.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 22,
+  "is_active": true
+ },
+ {
+  "id": "salads",
+  "display_name": "Seasonal Salads & Fresh Greens",
+  "category": "Accompaniment",
+  "default_description": "A refreshing medley of crisp greens, global salads, and herb-forward compositions. Designed to balance richer flavours with brightness, crunch, and natural freshness.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 23,
+  "is_active": true
+ },
+ {
+  "id": "papad-raita",
+  "display_name": "Papad & Raita Bar",
+  "category": "Accompaniment",
+  "default_description": "Traditional Indian accompaniments presented in a refined format. Crunchy papads, artisanal pickles, and cooling raitas to complement robust main courses.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 24,
+  "is_active": true
+ },
+ {
+  "id": "mains-indian",
+  "display_name": "Mains — Indian",
+  "category": "Mains",
+  "default_description": "The Indian curry section — slow-cooked vegetarian and non-vegetarian classics.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 25,
+  "is_active": true
+ },
+ {
+  "id": "signature-kitchen",
+  "display_name": "The Embassy Restaurant Signature Kitchen",
+  "category": "Mains",
+  "default_description": "A curated showcase of The Embassy Restaurant's most celebrated legacy recipes and house specialities. Timeless North Indian classics prepared with depth, richness, and heritage flavours.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 26,
+  "is_active": true
+ },
+ {
+  "id": "mughlai-table",
+  "display_name": "Mughlai Royal Table",
+  "category": "Mains",
+  "default_description": "Slow-cooked curries and regal preparations inspired by Mughal culinary traditions. Luxuriously spiced gravies, rich textures, and indulgent aromas rooted in royal kitchens.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 27,
+  "is_active": true
+ },
+ {
+  "id": "parsi",
+  "display_name": "Parsi Home-Style Specialities",
+  "category": "Mains",
+  "default_description": "A comforting, flavour-forward selection from the Parsi culinary repertoire. Sweet, tangy, and gently spiced preparations that bring warmth and nostalgia to the table.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 28,
+  "is_active": true
+ },
+ {
+  "id": "sea-kitchen",
+  "display_name": "South East Asian Kitchen",
+  "category": "Mains",
+  "default_description": "A vibrant showcase of Thai and South East Asian flavours. Fragrant curries, wok-tossed vegetables, and bold chilli-forward sauces for balanced heat and freshness.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 29,
+  "is_active": true
+ },
+ {
+  "id": "shanghai-wok",
+  "display_name": "Shanghai Wok (Live)",
+  "category": "Mains",
+  "default_description": "An interactive wok station — choice of ingredients tossed in the sauce of your liking.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 30,
+  "is_active": true
+ },
+ {
+  "id": "biryani-kitchen",
+  "display_name": "Hyderabadi Biryani & Rice Kitchen",
+  "category": "Mains",
+  "default_description": "Fragrant dum-cooked biryanis and aromatic rice dishes served with traditional accompaniments. Layered flavours, slow cooking, and soulful spice blends for hearty indulgence.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 31,
+  "is_active": true
+ },
+ {
+  "id": "pasta-studio",
+  "display_name": "Live Pasta Studio",
+  "category": "European Live",
+  "default_description": "Fresh pasta tossed live with classic sauces and seasonal toppings. Customisable, comforting, and indulgent, crafted to order for each guest.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 32,
+  "is_active": true
+ },
+ {
+  "id": "roti-breads",
+  "display_name": "Artisan Roti & Breads (Live)",
+  "category": "Breads",
+  "default_description": "Freshly baked Indian breads prepared live from the tandoor and tawa. Soft, flaky, and aromatic accompaniments to elevate every curry and grill. Butter naan",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 33,
+  "is_active": true
+ },
+ {
+  "id": "indian-desserts",
+  "display_name": "Indian Dessert Atelier",
+  "category": "Desserts",
+  "default_description": "A nostalgic celebration of India's most loved sweets, prepared and finished live. Warm, syrupy, and saffron-kissed indulgences crafted for traditional sweetness lovers.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 34,
+  "is_active": true
+ },
+ {
+  "id": "western-desserts",
+  "display_name": "Western Patisserie & Dessert Bar",
+  "category": "Desserts",
+  "default_description": "A refined selection of European-style desserts and baked classics. Creamy, chocolate-forward, and indulgent finales to complete the dining journey.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 35,
+  "is_active": true
+ },
+ {
+  "id": "beverage-lounge",
+  "display_name": "Beverage & Tea Lounge",
+  "category": "Beverages",
+  "default_description": "A curated selection of hot beverages to accompany desserts and late-evening conversations. Comforting brews served with quiet elegance to conclude the celebration.",
+  "veg_section_label": "Vegetarian",
+  "non_veg_section_label": "Non Vegetarian",
+  "sort_order": 36,
+  "is_active": true
+ }
+]
