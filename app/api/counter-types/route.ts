@@ -6,12 +6,12 @@ import type { CounterType } from '@/lib/types';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  return NextResponse.json(getCounterTypes());
+  return NextResponse.json(await getCounterTypes());
 }
 
 export async function POST(req: NextRequest) {
   const body = await req.json() as Partial<CounterType>;
-  const list = getCounterTypes();
+  const list = await getCounterTypes();
   const maxOrder = list.reduce((m, c) => Math.max(m, c.sort_order), 0);
   const ct: CounterType = {
     id: body.id ?? body.display_name!.toLowerCase().replace(/\s+/g, '-'),
@@ -23,15 +23,16 @@ export async function POST(req: NextRequest) {
     sort_order: body.sort_order ?? maxOrder + 1,
     is_active: body.is_active ?? true,
   };
-  saveCounterType(ct);
+  await saveCounterType(ct);
   return NextResponse.json(ct, { status: 201 });
 }
 
 export async function PATCH(req: NextRequest) {
   const body = await req.json() as Partial<CounterType> & { id: string };
-  const list = getCounterTypes();
+  const list = await getCounterTypes();
   const existing = list.find(c => c.id === body.id);
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  saveCounterType({ ...existing, ...body });
-  return NextResponse.json({ ...existing, ...body });
+  const updated = { ...existing, ...body };
+  await saveCounterType(updated);
+  return NextResponse.json(updated);
 }

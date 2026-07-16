@@ -645,14 +645,34 @@ export default function MenuBuilderPage() {
         body: JSON.stringify({ menu, mode: pdfMode }),
       });
       if (!res.ok) throw new Error('PDF Generation failed');
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${menu.client_name.replace(/\s+/g, '_')}_Proposal.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+
+      const contentType = res.headers.get('Content-Type') || '';
+      if (contentType.includes('text/html')) {
+        const htmlText = await res.text();
+        const printWindow = window.open('', '_blank');
+        if (printWindow) {
+          printWindow.document.write(htmlText);
+          printWindow.document.close();
+          printWindow.onload = () => {
+            printWindow.print();
+          };
+          // Safety timeout in case onload doesn't trigger
+          setTimeout(() => {
+            try { printWindow.print(); } catch {}
+          }, 500);
+        } else {
+          alert('Popup blocked! Please allow popups to print/save this menu proposal.');
+        }
+      } else {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${menu.client_name.replace(/\s+/g, '_')}_Proposal.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
     } catch {
       alert('Error exporting PDF. Please save first.');
     } finally {

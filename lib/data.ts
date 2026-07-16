@@ -1,18 +1,48 @@
 // lib/data.ts
-// Data loaders for JSON seed files — in-memory cache with CRUD helpers
+// Data loaders for JSON seed files, Supabase, or Netlify Blobs persistence.
 import fs from 'fs';
 import path from 'path';
 import type { Dish, Menu, CounterType } from './types';
+import { getStore } from '@netlify/blobs';
 
 const DATA_DIR = path.join(process.cwd(), 'data', 'seed');
-
-// ─── File paths ───────────────────────────────────────────────────────────────
 
 const DISHES_PATH = path.join(DATA_DIR, 'dishes.json');
 const MENUS_PATH = path.join(DATA_DIR, 'menus.json');
 const COUNTER_TYPES_PATH = path.join(DATA_DIR, 'counter_types.json');
 
-// ─── Read helpers ─────────────────────────────────────────────────────────────
+// --- Supabase Configuration ---
+const SUPABASE_URL = process.env.SUPABASE_URL?.replace(/\/rest\/v1\/?$/, '').replace(/\/$/, '');
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+const useSupabase = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
+
+// --- Netlify Blobs Configuration ---
+const useNetlifyBlobs = !!(process.env.NETLIFY || process.env.NETLIFY_BLOBS_API_URL || process.env.NETLIFY_DEV);
+
+// ─── PostgREST fetch helper ───────────────────────────────────────────────────
+
+async function supabaseFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      'apikey': SUPABASE_ANON_KEY!,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY!}`,
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Supabase error [${res.status}]: ${text}`);
+  }
+  if (res.status === 204) {
+    return {} as T;
+  }
+  return res.json() as Promise<T>;
+}
+
+// ─── Read/Write JSON helpers ──────────────────────────────────────────────────
 
 function readJson<T>(filePath: string): T {
   const raw = fs.readFileSync(filePath, 'utf-8');
@@ -23,29 +53,89 @@ function writeJson<T>(filePath: string, data: T): void {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 1), 'utf-8');
 }
 
+// ─── Netlify Blobs helpers ────────────────────────────────────────────────────
+// ponytail: O(n) array replacement in blob storage, fine for phase 1 scale, upgrade to indexed keys if arrays grow to megabytes
+async function readBlobOrJson<T>(key: string, localFilePath: string): Promise<T> {
+  if (useNetlifyBlobs) {
+    try {
+      const store = getStore('menucraft-store');
+      const val = await store.get(key, { type: 'text' });
+      if (val) {
+        return JSON.parse(val) as T;
+      }
+      // Seed from local file if blob is empty
+      const seedData = readJson<T>(localFilePath);
+      await store.set(key, JSON.stringify(seedData));
+      return seedData;
+    } catch (err) {
+      console.warn(`[Netlify Blobs] Failed to read ${key}, falling back to JSON:`, err);
+    }
+  }
+  return readJson<T>(localFilePath);
+}
+
+async function writeBlobOrJson<T>(key: string, localFilePath: string, data: T): Promise<void> {
+  if (useNetlifyBlobs) {
+    try {
+      const store = getStore('menucraft-store');
+      await store.set(key, JSON.stringify(data));
+      return;
+    } catch (err) {
+      console.warn(`[Netlify Blobs] Failed to write ${key}, falling back to JSON:`, err);
+    }
+  }
+  writeJson(localFilePath, data);
+}
+
 // ─── Dishes ───────────────────────────────────────────────────────────────────
 
-export function getDishes(): Dish[] {
-  return readJson<Dish[]>(DISHES_PATH);
+export async function getDishes(): Promise<Dish[]> {
+  if (useSupabase) {
+    return supabaseFetch<Dish[]>('dishes?select=*&order=name.asc');
+  }
+  return readBlobOrJson<Dish[]>('dishes', DISHES_PATH);
 }
 
-export function getDishById(id: string): Dish | undefined {
-  return getDishes().find(d => d.id === id);
+export async function getDishById(id: string): Promise<Dish | undefined> {
+  if (useSupabase) {
+    const list = await supabaseFetch<Dish[]>(`dishes?id=eq.${id}&select=*`);
+    return list[0];
+  }
+  const dishes = await getDishes();
+  return dishes.find(d => d.id === id);
 }
 
-export function saveDish(dish: Dish): void {
-  const dishes = getDishes();
+export async function saveDish(dish: Dish): Promise<void> {
+  if (useSupabase) {
+    await supabaseFetch('dishes', {
+      method: 'POST',
+      headers: {
+        'Prefer': 'resolution=merge-duplicates',
+      },
+      body: JSON.stringify(dish),
+    });
+    return;
+  }
+  const dishes = await getDishes();
   const idx = dishes.findIndex(d => d.id === dish.id);
   if (idx >= 0) {
     dishes[idx] = dish;
   } else {
     dishes.push(dish);
   }
-  writeJson(DISHES_PATH, dishes);
+  await writeBlobOrJson('dishes', DISHES_PATH, dishes);
 }
 
-export function nextDishId(): string {
-  const dishes = getDishes();
+export async function nextDishId(): Promise<string> {
+  if (useSupabase) {
+    const list = await supabaseFetch<{ id: string }[]>('dishes?select=id');
+    const nums = list
+      .map(d => parseInt(d.id.replace('dish-', ''), 10))
+      .filter(n => !isNaN(n));
+    const max = nums.length > 0 ? Math.max(...nums) : 0;
+    return `dish-${String(max + 1).padStart(4, '0')}`;
+  }
+  const dishes = await getDishes();
   const nums = dishes
     .map(d => parseInt(d.id.replace('dish-', ''), 10))
     .filter(n => !isNaN(n));
@@ -55,28 +145,52 @@ export function nextDishId(): string {
 
 // ─── Menus ────────────────────────────────────────────────────────────────────
 
-export function getMenus(): Menu[] {
-  return readJson<Menu[]>(MENUS_PATH);
+export async function getMenus(): Promise<Menu[]> {
+  if (useSupabase) {
+    return supabaseFetch<Menu[]>('menus?select=*&order=created_at.desc');
+  }
+  return readBlobOrJson<Menu[]>('menus', MENUS_PATH);
 }
 
-export function getMenuById(id: string): Menu | undefined {
-  return getMenus().find(m => m.id === id);
+export async function getMenuById(id: string): Promise<Menu | undefined> {
+  if (useSupabase) {
+    const list = await supabaseFetch<Menu[]>(`menus?id=eq.${id}&select=*`);
+    return list[0];
+  }
+  const menus = await getMenus();
+  return menus.find(m => m.id === id);
 }
 
-export function saveMenu(menu: Menu): void {
-  const menus = getMenus();
+export async function saveMenu(menu: Menu): Promise<void> {
+  if (useSupabase) {
+    await supabaseFetch('menus', {
+      method: 'POST',
+      headers: {
+        'Prefer': 'resolution=merge-duplicates',
+      },
+      body: JSON.stringify(menu),
+    });
+    return;
+  }
+  const menus = await getMenus();
   const idx = menus.findIndex(m => m.id === menu.id);
   if (idx >= 0) {
     menus[idx] = menu;
   } else {
     menus.push(menu);
   }
-  writeJson(MENUS_PATH, menus);
+  await writeBlobOrJson('menus', MENUS_PATH, menus);
 }
 
-export function deleteMenu(id: string): void {
-  const menus = getMenus().filter(m => m.id !== id);
-  writeJson(MENUS_PATH, menus);
+export async function deleteMenu(id: string): Promise<void> {
+  if (useSupabase) {
+    await supabaseFetch(`menus?id=eq.${id}`, {
+      method: 'DELETE',
+    });
+    return;
+  }
+  const menus = (await getMenus()).filter(m => m.id !== id);
+  await writeBlobOrJson('menus', MENUS_PATH, menus);
 }
 
 export function nextMenuId(): string {
@@ -85,21 +199,39 @@ export function nextMenuId(): string {
 
 // ─── Counter Types ────────────────────────────────────────────────────────────
 
-export function getCounterTypes(): CounterType[] {
-  return readJson<CounterType[]>(COUNTER_TYPES_PATH);
+export async function getCounterTypes(): Promise<CounterType[]> {
+  if (useSupabase) {
+    return supabaseFetch<CounterType[]>('counter_types?select=*&order=sort_order.asc');
+  }
+  return readBlobOrJson<CounterType[]>('counter_types', COUNTER_TYPES_PATH);
 }
 
-export function getCounterTypeById(id: string): CounterType | undefined {
-  return getCounterTypes().find(ct => ct.id === id);
+export async function getCounterTypeById(id: string): Promise<CounterType | undefined> {
+  if (useSupabase) {
+    const list = await supabaseFetch<CounterType[]>(`counter_types?id=eq.${id}&select=*`);
+    return list[0];
+  }
+  const list = await getCounterTypes();
+  return list.find(ct => ct.id === id);
 }
 
-export function saveCounterType(ct: CounterType): void {
-  const list = getCounterTypes();
+export async function saveCounterType(ct: CounterType): Promise<void> {
+  if (useSupabase) {
+    await supabaseFetch('counter_types', {
+      method: 'POST',
+      headers: {
+        'Prefer': 'resolution=merge-duplicates',
+      },
+      body: JSON.stringify(ct),
+    });
+    return;
+  }
+  const list = await getCounterTypes();
   const idx = list.findIndex(c => c.id === ct.id);
   if (idx >= 0) {
     list[idx] = ct;
   } else {
     list.push(ct);
   }
-  writeJson(COUNTER_TYPES_PATH, list);
+  await writeBlobOrJson('counter_types', COUNTER_TYPES_PATH, list);
 }

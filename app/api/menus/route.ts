@@ -7,11 +7,11 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
   if (id) {
-    const menu = getMenuById(id);
+    const menu = await getMenuById(id);
     if (!menu) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     return NextResponse.json(menu);
   }
-  return NextResponse.json(getMenus());
+  return NextResponse.json(await getMenus());
 }
 
 export async function POST(req: NextRequest) {
@@ -33,16 +33,16 @@ export async function POST(req: NextRequest) {
     updated_at: now,
     counters: body.counters ?? [],
   };
-  saveMenu(newMenu);
+  await saveMenu(newMenu);
   return NextResponse.json(newMenu, { status: 201 });
 }
 
 export async function PUT(req: NextRequest) {
   const body = await req.json() as Menu;
-  const existing = getMenuById(body.id);
+  const existing = await getMenuById(body.id);
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   const updated: Menu = { ...existing, ...body, updated_at: new Date().toISOString() };
-  saveMenu(updated);
+  await saveMenu(updated);
   return NextResponse.json(updated);
 }
 
@@ -50,6 +50,6 @@ export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
-  deleteMenu(id);
+  await deleteMenu(id);
   return NextResponse.json({ ok: true });
 }

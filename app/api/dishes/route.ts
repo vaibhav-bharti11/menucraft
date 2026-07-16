@@ -6,14 +6,14 @@ import type { Dish } from '@/lib/types';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const dishes = getDishes();
+  const dishes = await getDishes();
   return NextResponse.json(dishes);
 }
 
 export async function POST(req: NextRequest) {
   const body = await req.json() as Partial<Dish>;
   const newDish: Dish = {
-    id: nextDishId(),
+    id: await nextDishId(),
     name: body.name ?? '',
     description: body.description ?? '',
     dietary: body.dietary ?? 'VEG',
@@ -26,16 +26,16 @@ export async function POST(req: NextRequest) {
     updated_at: new Date().toISOString(),
     source: body.source,
   };
-  saveDish(newDish);
+  await saveDish(newDish);
   return NextResponse.json(newDish, { status: 201 });
 }
 
 export async function PATCH(req: NextRequest) {
   const body = await req.json() as Partial<Dish> & { id: string };
-  const dishes = getDishes();
+  const dishes = await getDishes();
   const existing = dishes.find(d => d.id === body.id);
   if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   const updated: Dish = { ...existing, ...body, updated_at: new Date().toISOString() };
-  saveDish(updated);
+  await saveDish(updated);
   return NextResponse.json(updated);
 }
