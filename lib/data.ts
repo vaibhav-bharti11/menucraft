@@ -36,10 +36,11 @@ async function supabaseFetch<T>(endpoint: string, options: RequestInit = {}): Pr
     const text = await res.text();
     throw new Error(`Supabase error [${res.status}]: ${text}`);
   }
-  if (res.status === 204) {
+  const text = await res.text();
+  if (!text) {
     return {} as T;
   }
-  return res.json() as Promise<T>;
+  return JSON.parse(text) as T;
 }
 
 // ─── Read/Write JSON helpers ──────────────────────────────────────────────────
