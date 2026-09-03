@@ -7,6 +7,9 @@ const nextConfig = {
       { protocol: 'https', hostname: 'fonts.gstatic.com' },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;

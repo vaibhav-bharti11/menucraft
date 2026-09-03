@@ -19,6 +19,9 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import AppShell from '@/components/AppShell';
 import type { Menu, MenuCounter, CounterType, Dish, DishRef, MenuStatus } from '@/lib/types';
+import DishAIModal from '@/components/ai/DishAIModal';
+import CounterAIModal from '@/components/ai/CounterAIModal';
+import GlobalAIAssistantModal from '@/components/ai/GlobalAIAssistantModal';
 
 const STATUS_FLOW: MenuStatus[] = ['DRAFT', 'READY', 'SENT', 'CONFIRMED', 'ARCHIVED'];
 
@@ -31,6 +34,8 @@ function SortableCounter({
   onRemove,
   onAddDish,
   onRemoveDish,
+  onOpenDishAI,
+  onOpenCounterAI,
 }: {
   counter: MenuCounter;
   index: number;
@@ -38,6 +43,8 @@ function SortableCounter({
   onRemove: (id: string) => void;
   onAddDish: (counterId: string) => void;
   onRemoveDish: (counterId: string, sectionKind: string, dishId: string) => void;
+  onOpenDishAI: (dish: DishRef, counterId: string) => void;
+  onOpenCounterAI: (counter: MenuCounter) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: counter.id });
   const [editingName, setEditingName] = useState(false);
@@ -113,7 +120,16 @@ function SortableCounter({
                   )}
                 </div>
               )}
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => onOpenCounterAI(counter)}
+                  title="AI Counter Tools"
+                  className="text-[11px] bg-[#FAF0E6] hover:bg-[#F3E5D8] text-[#8B1A1A] border border-[#C9A84C]/35 font-bold px-2 py-0.5 rounded flex items-center gap-1 transition-colors shadow-2xs"
+                >
+                  <span>✨</span>
+                  <span className="hidden sm:inline">AI Tools</span>
+                </button>
                 <button onClick={() => setEditingName(true)} className="text-gray-400 hover:text-gray-700 text-xs p-1">✏</button>
                 <button onClick={() => onRemove(counter.id)} title="Delete" className="text-gray-400 hover:text-red-600 text-xs p-1">🗑</button>
                 <button onClick={() => setCollapsed(c => !c)} className="text-gray-400 hover:text-gray-700 text-xs p-1">
@@ -169,10 +185,21 @@ function SortableCounter({
                               <div className="text-gray-400 text-[10px] truncate mt-0.5 italic">{dish.description}</div>
                             )}
                           </div>
-                          <button onClick={() => onRemoveDish(counter.id, 'NON_VEG', dish.dish_id)}
-                            className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all duration-200 ml-2 text-xs flex-shrink-0 p-1">
-                            ✕
-                          </button>
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => onOpenDishAI(dish, counter.id)}
+                              title="Generate or improve description with AI"
+                              className="opacity-0 group-hover:opacity-100 text-[10px] bg-[#FAF0E6] hover:bg-[#F3E5D8] text-[#8B1A1A] border border-[#C9A84C]/30 font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5 transition-all duration-150"
+                            >
+                              <span>✨</span>
+                              <span>AI</span>
+                            </button>
+                            <button onClick={() => onRemoveDish(counter.id, 'NON_VEG', dish.dish_id)}
+                              className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all duration-200 ml-1 text-xs flex-shrink-0 p-1">
+                              ✕
+                            </button>
+                          </div>
                         </div>
                       ))}
                       {nonVegSection.dishes.length === 0 && (
@@ -215,10 +242,21 @@ function SortableCounter({
                               <div className="text-gray-400 text-[10px] truncate mt-0.5 italic">{dish.description}</div>
                             )}
                           </div>
-                          <button onClick={() => onRemoveDish(counter.id, 'VEG', dish.dish_id)}
-                            className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all duration-200 ml-2 text-xs flex-shrink-0 p-1">
-                            ✕
-                          </button>
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => onOpenDishAI(dish, counter.id)}
+                              title="Generate or improve description with AI"
+                              className="opacity-0 group-hover:opacity-100 text-[10px] bg-[#FAF0E6] hover:bg-[#F3E5D8] text-[#8B1A1A] border border-[#C9A84C]/30 font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5 transition-all duration-150"
+                            >
+                              <span>✨</span>
+                              <span>AI</span>
+                            </button>
+                            <button onClick={() => onRemoveDish(counter.id, 'VEG', dish.dish_id)}
+                              className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all duration-200 ml-1 text-xs flex-shrink-0 p-1">
+                              ✕
+                            </button>
+                          </div>
                         </div>
                       ))}
                       {vegSection.dishes.length === 0 && (
@@ -434,6 +472,64 @@ export default function MenuBuilderPage() {
   const [editAccompanimentsVal, setEditAccompanimentsVal] = useState('');
   const [mobileExpandedCounters, setMobileExpandedCounters] = useState<Record<string, boolean>>({});
 
+  // AI States
+  const [activeAIDish, setActiveAIDish] = useState<{ dish: DishRef; counterId: string } | null>(null);
+  const [activeAICounter, setActiveAICounter] = useState<MenuCounter | null>(null);
+  const [showGlobalAIModal, setShowGlobalAIModal] = useState(false);
+
+  const handleApplyDishDescription = (dishId: string, newDescription: string) => {
+    if (!menu) return;
+    const updated = {
+      ...menu,
+      counters: menu.counters.map(c => ({
+        ...c,
+        sections: c.sections.map(s => ({
+          ...s,
+          dishes: s.dishes.map(d => d.dish_id === dishId ? { ...d, description: newDescription } : d),
+        })),
+      })),
+    };
+    setMenu(updated);
+    setIsDirty(true);
+  };
+
+  const handleBatchUpdateDescriptions = (counterId: string, updates: { dish_id: string; description: string }[]) => {
+    if (!menu) return;
+    const updateMap = new Map(updates.map(u => [u.dish_id, u.description]));
+    const updated = {
+      ...menu,
+      counters: menu.counters.map(c => {
+        if (c.id !== counterId) return c;
+        return {
+          ...c,
+          sections: c.sections.map(s => ({
+            ...s,
+            dishes: s.dishes.map(d => updateMap.has(d.dish_id) ? { ...d, description: updateMap.get(d.dish_id)! } : d),
+          })),
+        };
+      }),
+    };
+    setMenu(updated);
+    setIsDirty(true);
+  };
+
+  const handleGlobalBatchUpdateDescriptions = (updates: { dish_id: string; description: string }[]) => {
+    if (!menu) return;
+    const updateMap = new Map(updates.map(u => [u.dish_id, u.description]));
+    const updated = {
+      ...menu,
+      counters: menu.counters.map(c => ({
+        ...c,
+        sections: c.sections.map(s => ({
+          ...s,
+          dishes: s.dishes.map(d => updateMap.has(d.dish_id) ? { ...d, description: updateMap.get(d.dish_id)! } : d),
+        })),
+      })),
+    };
+    setMenu(updated);
+    setIsDirty(true);
+  };
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
@@ -635,46 +731,70 @@ export default function MenuBuilderPage() {
     setIsDirty(true);
   };
 
-  const generatePdf = async () => {
+  const generatePdf = async (action: 'download' | 'preview' = 'download') => {
     if (!menu) return;
+    
+    // Open a blank tab IMMEDIATELY to bypass popup blockers
+    let previewWin: Window | null = null;
+    if (action === 'preview') {
+      previewWin = window.open('', '_blank');
+      if (previewWin) {
+        previewWin.document.write('<html><body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;color:#555;"><h2>Generating PDF Preview...</h2></body></html>');
+      } else {
+        alert('Popup blocked! Please allow popups to preview the proposal.');
+        return; // Abort if blocked immediately
+      }
+    }
+
     setGeneratingPdf(true);
     try {
       const res = await fetch('/api/generate-pdf', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ menu, mode: pdfMode }),
+        body: JSON.stringify({ menu, mode: pdfMode, preview: action === 'preview' }),
       });
       if (!res.ok) throw new Error('PDF Generation failed');
 
       const contentType = res.headers.get('Content-Type') || '';
       if (contentType.includes('text/html')) {
         const htmlText = await res.text();
-        const printWindow = window.open('', '_blank');
+        const printWindow = previewWin || window.open('', '_blank');
         if (printWindow) {
+          printWindow.document.body.innerHTML = '';
           printWindow.document.write(htmlText);
           printWindow.document.close();
           printWindow.onload = () => {
             printWindow.print();
           };
-          // Safety timeout in case onload doesn't trigger
           setTimeout(() => {
             try { printWindow.print(); } catch {}
           }, 500);
         } else {
-          alert('Popup blocked! Please allow popups to print/save this menu proposal.');
+          alert('Popup blocked! Please allow popups to view the proposal.');
         }
       } else {
         const blob = await res.blob();
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${menu.client_name.replace(/\s+/g, '_')}_Proposal.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+
+        if (action === 'preview') {
+          if (previewWin) {
+            previewWin.location.href = url;
+          }
+        } else {
+          const clientSlug = (menu.client_name || 'Client').replace(/[^\w-]/g, '_');
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `The_Embassy_Catering_${clientSlug}_Proposal.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }
+        setTimeout(() => window.URL.revokeObjectURL(url), 60000);
       }
-    } catch {
-      alert('Error exporting PDF. Please save first.');
+    } catch (err) {
+      console.error(err);
+      if (previewWin) previewWin.close();
+      alert('Failed to generate PDF. Please try again.');
     } finally {
       setGeneratingPdf(false);
     }
@@ -1019,14 +1139,23 @@ export default function MenuBuilderPage() {
                 </svg>
               </button>
               <h2 className="text-gray-900 text-sm font-bold tracking-wide">Counter Details</h2>
-              <button 
-                onClick={() => setShowMobileCounterOptionsId(activeMobileCounter.id)}
-                className="text-gray-600 hover:text-gray-850 p-1.5 focus:outline-none"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                </svg>
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setActiveAICounter(activeMobileCounter)}
+                  className="bg-[#FAF0E6] text-[#8B1A1A] border border-[#C9A84C]/35 font-bold text-xs px-2 py-1 rounded-lg flex items-center gap-1 shadow-2xs"
+                >
+                  <span>✨</span>
+                  <span>AI Tools</span>
+                </button>
+                <button 
+                  onClick={() => setShowMobileCounterOptionsId(activeMobileCounter.id)}
+                  className="text-gray-600 hover:text-gray-850 p-1.5 focus:outline-none"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             {/* Scrollable Content */}
@@ -1091,7 +1220,15 @@ export default function MenuBuilderPage() {
                           )}
                         </div>
                       </div>
-                      <div className="flex items-center gap-1 flex-shrink-0">
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => setActiveAIDish({ dish, counterId: activeMobileCounter.id })}
+                          className="text-[10px] bg-[#FAF0E6] text-[#8B1A1A] border border-[#C9A84C]/30 font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5"
+                        >
+                          <span>✨</span>
+                          <span>AI</span>
+                        </button>
                         <button 
                           onClick={() => removeDishFromCounter(activeMobileCounter.id, 'NON_VEG', dish.dish_id)}
                           className="text-gray-400 hover:text-red-500 p-1"
@@ -1135,7 +1272,15 @@ export default function MenuBuilderPage() {
                           )}
                         </div>
                       </div>
-                      <div className="flex items-center gap-1 flex-shrink-0">
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => setActiveAIDish({ dish, counterId: activeMobileCounter.id })}
+                          className="text-[10px] bg-[#FAF0E6] text-[#8B1A1A] border border-[#C9A84C]/30 font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5"
+                        >
+                          <span>✨</span>
+                          <span>AI</span>
+                        </button>
                         <button 
                           onClick={() => removeDishFromCounter(activeMobileCounter.id, 'VEG', dish.dish_id)}
                           className="text-gray-400 hover:text-red-500 p-1"
@@ -1290,19 +1435,25 @@ export default function MenuBuilderPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-3 gap-2">
               <button 
                 onClick={() => setShowMobileClientEdit(true)}
                 className="bg-[#8B1A1A] hover:bg-[#701212] text-white py-2.5 rounded-lg text-[11px] font-semibold flex items-center justify-center gap-1 active:scale-98 transition-all"
               >
-                <span>Edit Details &gt;</span>
+                <span>Edit &gt;</span>
               </button>
               <button 
-                onClick={generatePdf}
-                disabled={generatingPdf}
-                className="border border-[#C9A84C]/45 bg-white hover:bg-gray-50 text-[#8B1A1A] py-2.5 rounded-lg text-[11px] font-semibold flex items-center justify-center gap-1.5 active:scale-98 transition-all disabled:opacity-50"
+                onClick={() => setShowGlobalAIModal(true)}
+                className="bg-[#FAF0E6] text-[#8B1A1A] border border-[#C9A84C]/45 hover:bg-[#F3E5D8] py-2.5 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 active:scale-98 transition-all shadow-2xs"
               >
-                <span>{generatingPdf ? 'Generating…' : 'Download PDF 📥'}</span>
+                <span>✨ AI Suite</span>
+              </button>
+              <button 
+                onClick={() => generatePdf('download')}
+                disabled={generatingPdf}
+                className="border border-[#C9A84C]/45 bg-white hover:bg-gray-50 text-[#8B1A1A] py-2.5 rounded-lg text-[11px] font-semibold flex items-center justify-center gap-1 active:scale-98 transition-all disabled:opacity-50"
+              >
+                <span>{generatingPdf ? 'PDF…' : 'PDF 📥'}</span>
               </button>
             </div>
           </div>
@@ -1437,33 +1588,50 @@ export default function MenuBuilderPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* AI Assistant */}
+            <button 
+              onClick={() => setShowGlobalAIModal(true)} 
+              className="btn-secondary text-[#8B1A1A] border-[#8B1A1A]/35 bg-[#FAF0E6]/60 hover:bg-[#FAF0E6] text-xs py-1.5 px-3.5 flex items-center gap-1.5 font-bold shadow-2xs transition-all"
+            >
+              <span>✨</span>
+              <span>AI Assistant</span>
+            </button>
+
             {/* Classic/Modern Toggle Button Group */}
             <div className="flex items-center bg-gray-100 p-0.5 rounded-lg border border-gray-200">
               <button 
                 onClick={() => setPdfMode('classic')}
-                className={`px-4 py-1 text-xs font-semibold rounded-md transition-all duration-150 ${pdfMode === 'classic' ? 'bg-[#8B1A1A] text-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}`}
+                className={`px-3.5 py-1 text-xs font-semibold rounded-md transition-all duration-150 ${pdfMode === 'classic' ? 'bg-[#8B1A1A] text-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}`}
               >
                 Classic
               </button>
               <button 
                 onClick={() => setPdfMode('modern')}
-                className={`px-4 py-1 text-xs font-semibold rounded-md transition-all duration-150 ${pdfMode === 'modern' ? 'bg-[#8B1A1A] text-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}`}
+                className={`px-3.5 py-1 text-xs font-semibold rounded-md transition-all duration-150 ${pdfMode === 'modern' ? 'bg-[#8B1A1A] text-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}`}
               >
                 Modern
               </button>
             </div>
 
             {/* Preview PDF */}
-            <button onClick={generatePdf} className="btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5">
+            <button 
+              onClick={() => generatePdf('preview')} 
+              disabled={generatingPdf}
+              className="btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5 disabled:opacity-50"
+            >
               <span>👁</span>
               <span>Preview PDF</span>
             </button>
 
             {/* Export PDF */}
-            <button onClick={generatePdf} disabled={generatingPdf} className="btn-primary text-xs py-1.5 px-4 flex items-center gap-1.5">
+            <button 
+              onClick={() => generatePdf('download')} 
+              disabled={generatingPdf} 
+              className="btn-primary text-xs py-1.5 px-4 flex items-center gap-1.5"
+            >
               <span>⬇</span>
-              <span>{generatingPdf ? 'Exporting…' : 'Export PDF'}</span>
+              <span>{generatingPdf ? 'Generating PDF…' : 'Export PDF'}</span>
             </button>
 
             <span className="h-6 w-[1px] bg-gray-200" />
@@ -1663,6 +1831,8 @@ export default function MenuBuilderPage() {
                         onRemove={removeCounter}
                         onAddDish={id => setActivePickerCounterId(id)}
                         onRemoveDish={removeDishFromCounter}
+                        onOpenDishAI={(dish, cid) => setActiveAIDish({ dish, counterId: cid })}
+                        onOpenCounterAI={c => setActiveAICounter(c)}
                       />
                     ))}
                   </div>
@@ -1721,6 +1891,50 @@ export default function MenuBuilderPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* AI Modals */}
+      {activeAIDish && (
+        <DishAIModal
+          isOpen={!!activeAIDish}
+          dish={activeAIDish.dish}
+          eventContext={{
+            functionType: menu.function_type,
+            venue: menu.venue,
+            guestCount: menu.guest_count,
+          }}
+          onClose={() => setActiveAIDish(null)}
+          onApply={handleApplyDishDescription}
+        />
+      )}
+
+      {activeAICounter && (
+        <CounterAIModal
+          isOpen={!!activeAICounter}
+          counter={activeAICounter}
+          eventContext={{
+            functionType: menu.function_type,
+            venue: menu.venue,
+            guestCount: menu.guest_count,
+            requirements: menu.requirements_note,
+            exclusions: menu.exclusions_note,
+          }}
+          onClose={() => setActiveAICounter(null)}
+          onUpdateCounter={updateCounter}
+          onBatchUpdateDescriptions={handleBatchUpdateDescriptions}
+          onAddSuggestedDish={addDishToCounter}
+        />
+      )}
+
+      {showGlobalAIModal && (
+        <GlobalAIAssistantModal
+          isOpen={showGlobalAIModal}
+          menu={menu}
+          onClose={() => setShowGlobalAIModal(false)}
+          onUpdateMenu={updateMenu}
+          onAddDishToCounter={addDishToCounter}
+          onBatchUpdateDishDescriptions={handleGlobalBatchUpdateDescriptions}
+        />
       )}
     </AppShell>
   );

@@ -1,36 +1,38 @@
 // app/api/generate-pdf/route.ts
-// PDF generation — spawns a standalone Node.js ESM worker (scripts/pdf-worker.mjs)
-// that uses puppeteer-core + @sparticuz/chromium outside of webpack bundling.
-// Falls back to returning HTML for browser print if the worker fails.
+// PDF generation — spawns standalone Node.js ESM worker (scripts/pdf-worker.mjs)
+// Returns real binary PDF with HTML fallback if worker fails.
+//
+// Both Preview PDF and Export PDF call this same route.
+// The 'preview' flag only changes Content-Disposition (inline vs attachment).
 
 import { NextRequest, NextResponse } from 'next/server';
-import { buildClassicHtml } from '@/lib/pdf/classic';
+import { buildPremiumClassicHtml } from '@/lib/pdf/premiumClassic';
 import { buildModernHtml } from '@/lib/pdf/modern';
+import { sanitizeFilenamePart, clearImageCache } from '@/lib/pdf/helpers';
 import type { PdfRequest } from '@/lib/types';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { writeFileSync, readFileSync, unlinkSync, existsSync } from 'fs';
 import { spawn } from 'child_process';
 import { join } from 'path';
 import { tmpdir } from 'os';
 
-function buildFilename(menu: PdfRequest['menu'], mode: string): string {
-  let clientLast = menu.client_name.split(' ').pop() ?? menu.client_name;
-  let dateStr = menu.event_date;
+/**
+ * Build a professional filename: The-Embassy-Catering-ClientName-18-August-2026.pdf
+ */
+function buildFilename(menu: PdfRequest['menu']): string {
+  const clientPart = sanitizeFilenamePart(menu.client_name || 'Client');
+  let datePart = 'Proposal';
   try {
-    dateStr = format(new Date(menu.event_date), 'ddMMMyyyy');
+    if (menu.event_date) {
+      const d = menu.event_date.includes('T') ? parseISO(menu.event_date) : new Date(menu.event_date);
+      if (!isNaN(d.getTime())) {
+        datePart = format(d, 'd-MMMM-yyyy');
+      }
+    }
   } catch {
-    // keep raw
+    // fallback to 'Proposal'
   }
-  let guestStr = menu.guest_count.replace(/\s+/g, '');
-
-  // Sanitize non-ASCII characters from headers (e.g. en-dash \u2013 -> hyphen)
-  // Also clean out non-safe filename characters
-  clientLast = clientLast.replace(/[^\x00-\x7F]/g, '').replace(/[^a-zA-Z0-9_-]/g, '') || 'Menu';
-  dateStr = dateStr.replace(/[^\x00-\x7F]/g, '').replace(/[^a-zA-Z0-9_-]/g, '') || 'Date';
-  guestStr = guestStr.replace(/[^\x00-\x7F]/g, '-').replace(/[^a-zA-Z0-9_-]/g, '') || 'Guests';
-
-  const modeLabel = mode === 'modern' ? 'Modern' : 'Classic';
-  return `EMBASSY_${clientLast}_${dateStr}_${guestStr}_${modeLabel}.pdf`;
+  return `The-Embassy-Catering-${clientPart}-${datePart}.pdf`;
 }
 
 /** Spawn the ESM pdf-worker.mjs in a fresh Node.js process. */
@@ -39,7 +41,7 @@ function spawnPdfWorker(htmlPath: string, pdfPath: string): Promise<void> {
     const workerPath = join(process.cwd(), 'scripts', 'pdf-worker.mjs');
     const child = spawn(process.execPath, [workerPath, htmlPath, pdfPath], {
       stdio: ['ignore', 'pipe', 'pipe'],
-      timeout: 60_000,
+      timeout: 90_000, // increased for image-heavy pages
     });
 
     let stderr = '';
@@ -55,16 +57,46 @@ function spawnPdfWorker(htmlPath: string, pdfPath: string): Promise<void> {
 }
 
 export async function POST(req: NextRequest) {
-  const body = (await req.json()) as PdfRequest;
-  const { menu, mode } = body;
+  let body: PdfRequest & { preview?: boolean };
+  try {
+    body = (await req.json()) as PdfRequest & { preview?: boolean };
+  } catch {
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  }
 
-  const html = mode === 'modern' ? buildModernHtml(menu) : buildClassicHtml(menu);
-  const filename = buildFilename(menu, mode);
+  const { menu, mode, preview, returnHtml } = body as PdfRequest & { preview?: boolean; returnHtml?: boolean };
+
+  if (!menu) {
+    return NextResponse.json({ error: 'No menu data provided' }, { status: 400 });
+  }
+
+  // Image cache is now smartly managed with mtime in helpers.ts
+  // clearImageCache();
+
+  // Build HTML — classic mode now uses the premium builder
+  let html: string;
+  try {
+    html = mode === 'modern' ? buildModernHtml(menu) : buildPremiumClassicHtml(menu);
+  } catch (buildErr) {
+    console.error('[generate-pdf] HTML build failed:', buildErr);
+    return NextResponse.json({ error: 'Failed to build PDF content' }, { status: 500 });
+  }
+
+  if (returnHtml) {
+    return new NextResponse(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+      },
+    });
+  }
+
+  const filename = buildFilename(menu);
 
   // Temp file paths in OS temp dir
-  const ts = Date.now();
+  const ts = `${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
   const htmlTmp = join(tmpdir(), `embassy-menu-${ts}.html`);
-  const pdfTmp  = join(tmpdir(), `embassy-menu-${ts}.pdf`);
+  const pdfTmp = join(tmpdir(), `embassy-menu-${ts}.pdf`);
 
   try {
     writeFileSync(htmlTmp, html, 'utf-8');
@@ -72,16 +104,22 @@ export async function POST(req: NextRequest) {
     await spawnPdfWorker(htmlTmp, pdfTmp);
 
     const pdfBuffer = readFileSync(pdfTmp);
+    // inline = Preview in browser tab; attachment = download
+    const disposition = preview
+      ? `inline; filename="${filename}"`
+      : `attachment; filename="${filename}"`;
 
     return new NextResponse(pdfBuffer, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Disposition': disposition,
         'X-PDF-Mode': 'puppeteer',
+        'X-PDF-Filename': filename,
       },
     });
   } catch (err) {
+    // Graceful fallback: return the HTML so Puppeteer failure doesn't brick the UX
     console.error('[generate-pdf] Worker failed, returning HTML fallback:', err);
     return new NextResponse(html, {
       status: 200,
@@ -92,8 +130,8 @@ export async function POST(req: NextRequest) {
       },
     });
   } finally {
-    // Clean up temp files
+    // Always clean up temp files
     try { if (existsSync(htmlTmp)) unlinkSync(htmlTmp); } catch {}
-    try { if (existsSync(pdfTmp))  unlinkSync(pdfTmp);  } catch {}
+    try { if (existsSync(pdfTmp)) unlinkSync(pdfTmp); } catch {}
   }
 }

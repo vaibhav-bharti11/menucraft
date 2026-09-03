@@ -1,0 +1,545 @@
+{
+  "dish-0004": {
+    "dishId": "dish-0004",
+    "dishName": "Cocktail samosa",
+    "filename": "generated/dish-0004.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:56.600Z"
+  },
+  "dish-0014": {
+    "dishId": "dish-0014",
+    "dishName": "Philadelphia cheese marinated chicken tikka",
+    "filename": "generated/dish-0014.jpg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.181Z",
+    "provider": "antigravity",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1714,
+    "sha256": "231185d3ace1d19bafcef2bc1e67a15825853591a3777ca328160e3740a84e65",
+    "prompt": "Professional award-winning luxury catering food photography of \"Philadelphia cheese marinated chicken tikka\", featuring Tender chunks of chicken marinated with fresh yogurt cheese, cream, spices charcoal grilled, (Global cuisine, Authentic non-vegetarian preparation featuring tender chicken), plated with precision on fine ceramic tableware, gourmet catering presentation, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0012": {
+    "dishId": "dish-0012",
+    "dishName": "Wasabi prawns",
+    "filename": "generated/dish-0012.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:56.616Z"
+  },
+  "dish-0015": {
+    "dishId": "dish-0015",
+    "dishName": "Japanese chicken karage",
+    "filename": "generated/dish-0015.jpg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.191Z",
+    "provider": "antigravity",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1710,
+    "sha256": "c95804f9cd448e8fc204d61c47a138979746448f5abd7817fbf95cd037fb1d1a",
+    "prompt": "Professional award-winning luxury catering food photography of \"Japanese chicken karage\", featuring Fried chicken sticks tossed with light sui mono sauce, (Global cuisine, Authentic non-vegetarian preparation featuring tender chicken), plated with precision on fine ceramic tableware, gourmet catering presentation, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0022": {
+    "dishId": "dish-0022",
+    "dishName": "Chilly garlic lamb",
+    "filename": "generated/dish-0022.jpg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.196Z",
+    "provider": "antigravity",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1704,
+    "sha256": "fa6c873d49b70998d87ab0187bf01d31a178eabffee6ac1e09ef8b361816b08f",
+    "prompt": "Professional award-winning luxury catering food photography of \"Chilly garlic lamb\", featuring Shredded crispy lamb, Spiced to perfection, Tossed in Flaky chilli sauce and spring onions, (Global cuisine, Authentic non-vegetarian preparation featuring prime mutton / lamb), plated with precision on fine ceramic tableware, gourmet catering presentation, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0026": {
+    "dishId": "dish-0026",
+    "dishName": "Achari paneer tikka",
+    "filename": "generated/dish-0026.jpg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.201Z",
+    "provider": "antigravity",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1701,
+    "sha256": "ee9b03dcce60576f1dea209b0007cf2a5febfc901e321d67c721a907b2b2e080",
+    "prompt": "Professional award-winning luxury catering food photography of \"Achari paneer tikka\", featuring Fresh cottage cheese marinate with in house pickle served with green mint salsa, (Global cuisine, Strictly 100% vegetarian culinary dish, completely free of meat, chicken, fish, seafood, or egg), plated with precision on fine ceramic tableware, gourmet catering presentation, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0150": {
+    "dishId": "dish-0150",
+    "dishName": "Berry pulao",
+    "filename": "generated/dish-0150.svg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.206Z",
+    "provider": "mock",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1691,
+    "sha256": "33a4904529b152f8971b06027e9ed89459187d5ce1e60ffb9e0feb7181391195",
+    "prompt": "Professional award-winning luxury catering food photography of \"Berry pulao\", featuring Fragrant basmati rice layered with caramelized onions, dry fruits, and tangy berries for a signature Parsi delicacy., (Indian cuisine, Strictly 100% vegetarian culinary dish, completely free of meat, chicken, fish, seafood, or egg), plated with precision on fine ceramic tableware, gourmet catering presentation, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0143": {
+    "dishId": "dish-0143",
+    "dishName": "Dal bukhara",
+    "filename": "generated/dish-0143.svg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.210Z",
+    "provider": "mock",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1690,
+    "sha256": "459bc013b23ac1ed063e087a0f9eef185990b58539895a5e0d1a7d8029e21365",
+    "prompt": "Professional award-winning luxury catering food photography of \"Dal bukhara\", featuring Overnight soaked black lentil cooked way of Bukhara, (Indian cuisine, Strictly 100% vegetarian culinary dish, completely free of meat, chicken, fish, seafood, or egg), plated with precision on fine ceramic tableware, gourmet catering presentation, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0009": {
+    "dishId": "dish-0009",
+    "dishName": "Dry fruit cake",
+    "filename": "generated/dish-0009.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:56.602Z"
+  },
+  "dish-0165": {
+    "dishId": "dish-0165",
+    "dishName": "Choice of pastas",
+    "filename": "generated/dish-0165.svg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.217Z",
+    "provider": "mock",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1699,
+    "sha256": "c83be480a4c8da97740006d821f4469316d85405589e93f4837ebdf0460df450",
+    "prompt": "Professional award-winning luxury catering food photography of \"Choice of pastas\", (Italian cuisine, Strictly 100% vegetarian culinary dish, completely free of meat, chicken, fish, seafood, or egg), plated with precision on fine ceramic tableware, gourmet catering presentation, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0089": {
+    "dishId": "dish-0089",
+    "dishName": "Spicy pepperoni pizza",
+    "filename": "generated/dish-0089.svg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.219Z",
+    "provider": "mock",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1706,
+    "sha256": "fd30a24c86c75c3299aff5139ed3b3381d219242431a764e8734843b15b2d0f3",
+    "prompt": "Professional award-winning luxury catering food photography of \"Spicy pepperoni pizza\", (Italian cuisine, Authentic non-vegetarian gourmet dish), served fresh on a rustic wooden pizza peel with melted bubbling cheese and crisp crust, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0429": {
+    "dishId": "dish-0429",
+    "dishName": "Crab california sushi roll",
+    "filename": "generated/dish-0429.svg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.222Z",
+    "provider": "mock",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1713,
+    "sha256": "71844da2336e5b113d0bc97fa4ee0b90292013dcb1373ac89e2cc1de332726d4",
+    "prompt": "Professional award-winning luxury catering food photography of \"Crab california sushi roll\", featuring Crab stick cucumber Qp mayo sesame seeds, (North Indian, Global cuisine, Authentic non-vegetarian preparation featuring succulent prawns / seafood), plated with precision on fine ceramic tableware, gourmet catering presentation, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0055": {
+    "dishId": "dish-0055",
+    "dishName": "Pesto bruschetta",
+    "filename": "generated/dish-0055.jpg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.226Z",
+    "provider": "antigravity",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1698,
+    "sha256": "9d3c106b31e4a7c9ad01b13c939e25b28277c84e33345cc4f0d9e1b414ac3b00",
+    "prompt": "Professional award-winning luxury catering food photography of \"Pesto bruschetta\", featuring Spread pesto over country bread and top with bell pepper, tomato, and feta to prepare this flavorful bruschetta, (Global cuisine, Strictly 100% vegetarian culinary dish, completely free of meat, chicken, fish, seafood, or egg), arranged on a sleek luxury cocktail party pass-around silver platter, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0081": {
+    "dishId": "dish-0081",
+    "dishName": "Choice of broth",
+    "filename": "generated/dish-0081.svg",
+    "source": "generated",
+    "generatedAt": "2026-09-01T08:40:36.229Z",
+    "provider": "mock",
+    "model": "mock-svg-v1",
+    "promptVersion": "v1.0",
+    "fileSizeBytes": 1695,
+    "sha256": "348e962de99f2aae6a92de928e39107b13a26811e1bb7437de04e7b69be34a07",
+    "prompt": "Professional award-winning luxury catering food photography of \"Choice of broth\", featuring Veg miso mushroom broth Chicken sesame paitan broth, (Japanese, Pan Asian cuisine, Strictly 100% vegetarian culinary dish, completely free of meat, chicken, fish, seafood, or egg), served in a deep artisan soup bowl with refined garnish and subtle steam, appetizing realistic textures, exquisite culinary detailing, warm soft natural side lighting, subtle depth of field, high-end editorial food magazine aesthetic, ultra-high definition, 8k resolution, crisp focus, clean appetizing background, no text, no watermark, no logos, no humans, no hands, no menus"
+  },
+  "dish-0001": {
+    "dishId": "dish-0001",
+    "dishName": "Assorted bite size sandwich",
+    "filename": "generated/dish-0001.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:56.594Z"
+  },
+  "dish-0002": {
+    "dishId": "dish-0002",
+    "dishName": "Mushroom vol au vents",
+    "filename": "generated/dish-0002.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:56.598Z"
+  },
+  "dish-0003": {
+    "dishId": "dish-0003",
+    "dishName": "Spinach & corn quiche",
+    "filename": "generated/dish-0003.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:00.170Z"
+  },
+  "dish-0005": {
+    "dishId": "dish-0005",
+    "dishName": "Assorted bater-fried crispies",
+    "filename": "generated/dish-0005.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:00.176Z"
+  },
+  "dish-0006": {
+    "dishId": "dish-0006",
+    "dishName": "Chilli cheese toast",
+    "filename": "generated/dish-0006.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:00.179Z"
+  },
+  "dish-0007": {
+    "dishId": "dish-0007",
+    "dishName": "Mozzarella, confit pepper & parsley croquettes",
+    "filename": "generated/dish-0007.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:00.182Z"
+  },
+  "dish-0008": {
+    "dishId": "dish-0008",
+    "dishName": "Kaju katli",
+    "filename": "generated/dish-0008.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:00.186Z"
+  },
+  "dish-0010": {
+    "dishId": "dish-0010",
+    "dishName": "Tea & Coffee",
+    "filename": "generated/dish-0010.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:56.606Z"
+  },
+  "dish-0011": {
+    "dishId": "dish-0011",
+    "dishName": "Mineral water - 200 ml",
+    "filename": "generated/dish-0011.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:56.609Z"
+  },
+  "dish-0013": {
+    "dishId": "dish-0013",
+    "dishName": "Amritsari fish with edamame, figs & prunes chutney",
+    "filename": "generated/dish-0013.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T07:17:56.618Z"
+  },
+  "dish-0016": {
+    "dishId": "dish-0016",
+    "dishName": "Dragon chicken",
+    "filename": "generated/dish-0016.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.722Z"
+  },
+  "dish-0017": {
+    "dishId": "dish-0017",
+    "dishName": "Rampuri seekh kebab",
+    "filename": "generated/dish-0017.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0018": {
+    "dishId": "dish-0018",
+    "dishName": "Gamberoni a-la-plancha",
+    "filename": "generated/dish-0018.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0019": {
+    "dishId": "dish-0019",
+    "dishName": "Fenugreek fish tikka with coriander chilly dip",
+    "filename": "generated/dish-0019.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0020": {
+    "dishId": "dish-0020",
+    "dishName": "Duck spring roll",
+    "filename": "generated/dish-0020.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0021": {
+    "dishId": "dish-0021",
+    "dishName": "Burnt garlic thyme chicken tikka",
+    "filename": "generated/dish-0021.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0023": {
+    "dishId": "dish-0023",
+    "dishName": "Goan pepper lamb",
+    "filename": "generated/dish-0023.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0024": {
+    "dishId": "dish-0024",
+    "dishName": "Edamame seekh kebab",
+    "filename": "generated/dish-0024.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0025": {
+    "dishId": "dish-0025",
+    "dishName": "Charcoal roasted mushroom",
+    "filename": "generated/dish-0025.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0027": {
+    "dishId": "dish-0027",
+    "dishName": "Turkish sigara börek",
+    "filename": "generated/dish-0027.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0028": {
+    "dishId": "dish-0028",
+    "dishName": "Bang bang broccoli",
+    "filename": "generated/dish-0028.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0029": {
+    "dishId": "dish-0029",
+    "dishName": "Figs & walnut kebab",
+    "filename": "generated/dish-0029.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0030": {
+    "dishId": "dish-0030",
+    "dishName": "Ricotta hung curd kebab",
+    "filename": "generated/dish-0030.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0031": {
+    "dishId": "dish-0031",
+    "dishName": "Butter chilli garlic crispy water chestnut",
+    "filename": "generated/dish-0031.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0032": {
+    "dishId": "dish-0032",
+    "dishName": "Truffle butter drizzled soya malai tikka",
+    "filename": "generated/dish-0032.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0033": {
+    "dishId": "dish-0033",
+    "dishName": "Crispy honey lotus stem",
+    "filename": "generated/dish-0033.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0034": {
+    "dishId": "dish-0034",
+    "dishName": "Savoury tarts of leeks & onion",
+    "filename": "generated/dish-0034.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0035": {
+    "dishId": "dish-0035",
+    "dishName": "Kung pao potatoes with spring onion",
+    "filename": "generated/dish-0035.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0036": {
+    "dishId": "dish-0036",
+    "dishName": "Gol gappa ( meetha, pudhina, hing, guava)",
+    "filename": "generated/dish-0036.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0037": {
+    "dishId": "dish-0037",
+    "dishName": "Haridwar patta pe karari aloo tikki",
+    "filename": "generated/dish-0037.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0038": {
+    "dishId": "dish-0038",
+    "dishName": "Palak patte ki chaat",
+    "filename": "generated/dish-0038.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0039": {
+    "dishId": "dish-0039",
+    "dishName": "Avocado sev puri disc",
+    "filename": "generated/dish-0039.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0040": {
+    "dishId": "dish-0040",
+    "dishName": "Matra : home made kulcha",
+    "filename": "generated/dish-0040.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0041": {
+    "dishId": "dish-0041",
+    "dishName": "Lavaash",
+    "filename": "generated/dish-0041.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0042": {
+    "dishId": "dish-0042",
+    "dishName": "Cracker",
+    "filename": "generated/dish-0042.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0043": {
+    "dishId": "dish-0043",
+    "dishName": "Garlic toast",
+    "filename": "generated/dish-0043.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0044": {
+    "dishId": "dish-0044",
+    "dishName": "Focaccia bread",
+    "filename": "generated/dish-0044.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0045": {
+    "dishId": "dish-0045",
+    "dishName": "Nachos",
+    "filename": "generated/dish-0045.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0046": {
+    "dishId": "dish-0046",
+    "dishName": "Avocado salsa",
+    "filename": "generated/dish-0046.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0047": {
+    "dishId": "dish-0047",
+    "dishName": "Sour cream",
+    "filename": "generated/dish-0047.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0048": {
+    "dishId": "dish-0048",
+    "dishName": "Tomato salsa",
+    "filename": "generated/dish-0048.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0049": {
+    "dishId": "dish-0049",
+    "dishName": "Mushroom paté",
+    "filename": "generated/dish-0049.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0050": {
+    "dishId": "dish-0050",
+    "dishName": "Peri peri hummus",
+    "filename": "generated/dish-0050.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0051": {
+    "dishId": "dish-0051",
+    "dishName": "Camembert",
+    "filename": "generated/dish-0051.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0052": {
+    "dishId": "dish-0052",
+    "dishName": "Brie cheese",
+    "filename": "generated/dish-0052.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0053": {
+    "dishId": "dish-0053",
+    "dishName": "Red cheddar cheese",
+    "filename": "generated/dish-0053.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0054": {
+    "dishId": "dish-0054",
+    "dishName": "Assorted fruits",
+    "filename": "generated/dish-0054.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-02T08:35:25.723Z"
+  }
+}
