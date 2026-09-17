@@ -541,5 +541,69 @@
     "source": "generated",
     "provider": "antigravity",
     "generatedAt": "2026-09-02T08:35:25.723Z"
+  },
+  "dish-0828": {
+    "dishId": "dish-0828",
+    "dishName": "Nachos with salsa",
+    "filename": "generated/dish-0828.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-07T07:19:05.100Z"
+  },
+  "dish-0189": {
+    "dishId": "dish-0189",
+    "dishName": "Green tea",
+    "filename": "generated/dish-0189.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-07T07:19:05.103Z"
+  },
+  "dish-0191": {
+    "dishId": "dish-0191",
+    "dishName": "Black coffee",
+    "filename": "generated/dish-0191.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-07T07:19:05.106Z"
+  },
+  "dish-0070": {
+    "dishId": "dish-0070",
+    "dishName": "Exotic vegetable dumpling",
+    "filename": "generated/dish-0070.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-07T07:19:05.108Z"
+  },
+  "dish-0067": {
+    "dishId": "dish-0067",
+    "dishName": "Prawns & chives dumpling",
+    "filename": "generated/dish-0067.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-07T07:19:05.109Z"
+  },
+  "dish-0262": {
+    "dishId": "dish-0262",
+    "dishName": "Adraki soya chaap masala",
+    "filename": "generated/dish-0262.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-07T07:19:05.111Z"
+  },
+  "dish-0172": {
+    "dishId": "dish-0172",
+    "dishName": "Gulab jamun",
+    "filename": "generated/dish-0172.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-07T07:19:05.112Z"
+  },
+  "dish-0176": {
+    "dishId": "dish-0176",
+    "dishName": "Rasmalai",
+    "filename": "generated/dish-0176.jpg",
+    "source": "generated",
+    "provider": "antigravity",
+    "generatedAt": "2026-09-07T07:19:05.113Z"
   }
 }

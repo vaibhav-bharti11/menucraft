@@ -118,17 +118,17 @@
  {
   "id": "menu-1787657577520",
   "client_name": "",
-  "event_date": "2026-08-18",
-  "function_type": "Dinner",
-  "guest_count": "",
-  "venue": "",
+  "event_date": "2026-09-03",
+  "function_type": "Other",
+  "guest_count": "1000 px",
+  "venue": "VICEORY INN",
   "requirements_note": "Water proof Kitchen area with water & light",
   "exclusions_note": "Tenting related items\nFlorist",
   "signed_by_name": "Pranay Bahl",
   "signed_by_phone": "9899004852",
   "status": "DRAFT",
   "created_at": "2026-08-25T11:32:57.520Z",
-  "updated_at": "2026-09-03T07:58:10.319Z",
+  "updated_at": "2026-09-17T07:05:02.135Z",
   "counters": [
    {
     "id": "counter-1787657641332",
@@ -205,11 +205,11 @@
     ]
    },
    {
-    "id": "counter-1788422273760",
-    "counter_type_id": "dimsum-gyoza",
-    "display_name": "Kampai Dim Sum & Gyoza Station (Live)",
-    "display_name_print": "KAMPAI DIM SUM & GYOZA STATION (LIVE)",
-    "description": "Steamed and pan-seared dumplings crafted live, inspired by classic East Asian flavours. Light, aromatic bites with bold fillings, served straight from the steamer for peak freshness.",
+    "id": "counter-1788435549657",
+    "counter_type_id": "sindh-e-punjab",
+    "display_name": "Sindh-e-Punjab (Live)",
+    "display_name_print": "SINDH-E-PUNJAB (LIVE)",
+    "description": "Regional Indian charcoal grill — lamb chops, tangri and robust Punjabi flavours.",
     "accompaniments_label": "Accompaniments",
     "accompaniments": "Laccha Onion, Mint Chutney, Burani Raita, Lemon Wedges",
     "sections": [
@@ -218,9 +218,71 @@
       "kind": "VEG",
       "dishes": [
        {
-        "dish_id": "dish-0070",
-        "name": "Exotic vegetable dumpling",
-        "description": "Broccoli, baby carrot, cauliflower, cilantro, celery wrapped inside wonton sheet",
+        "dish_id": "dish-0262",
+        "name": "Adraki soya chaap masala",
+        "description": "Soft soya chaap cooked with Indian delicacy masala",
+        "dietary": "VEG"
+       }
+      ]
+     },
+     {
+      "label": "Non Vegetarian",
+      "kind": "NON_VEG",
+      "dishes": []
+     }
+    ]
+   },
+   {
+    "id": "counter-1788435580667",
+    "counter_type_id": "indian-desserts",
+    "display_name": "Indian Dessert Atelier",
+    "display_name_print": "INDIAN DESSERT ATELIER",
+    "description": "A nostalgic celebration of India's most loved sweets, prepared and finished live. Warm, syrupy, and saffron-kissed indulgences crafted for traditional sweetness lovers.",
+    "accompaniments_label": "Accompaniments",
+    "accompaniments": "Laccha Onion, Mint Chutney, Burani Raita, Lemon Wedges",
+    "sections": [
+     {
+      "label": "Vegetarian",
+      "kind": "VEG",
+      "dishes": [
+       {
+        "dish_id": "dish-0172",
+        "name": "Gulab jamun",
+        "description": "Gulab jamun is a dessert made of milk solids in a sugar syrup flavored with cardamom seeds, rosewa- ter & stuffed with pistacchios.",
+        "dietary": "VEG"
+       },
+       {
+        "dish_id": "dish-0176",
+        "name": "Rasmalai",
+        "description": "Ras malai is dumplings made from cottage cheese soaked in sweetened, thickened milk delicately flavored with cardamom",
+        "dietary": "VEG"
+       }
+      ]
+     },
+     {
+      "label": "Non Vegetarian",
+      "kind": "NON_VEG",
+      "dishes": []
+     }
+    ]
+   },
+   {
+    "id": "counter-1789628684093",
+    "counter_type_id": "pizza-oven",
+    "display_name": "Italian Artisan Pizza Oven (Live)",
+    "display_name_print": "ITALIAN ARTISAN PIZZA OVEN (LIVE)",
+    "description": "Stone-baked gourmet pizzas prepared live with premium toppings and hand-stretched bases. Classic Italian comfort elevated with fresh produce, fine cheeses, and bold flavour combinations.",
+    "accompaniments_label": "Accompaniments",
+    "accompaniments": "Laccha Onion, Mint Chutney, Burani Raita, Lemon Wedges",
+    "sections": [
+     {
+      "label": "Vegetarian",
+      "kind": "VEG",
+      "dishes": [
+       {
+        "dish_id": "dish-0092",
+        "name": "Buratta, basil & cherry tomato pizza",
+        "description": "",
         "dietary": "VEG"
        }
       ]
@@ -230,9 +292,9 @@
       "kind": "NON_VEG",
       "dishes": [
        {
-        "dish_id": "dish-0067",
-        "name": "Prawns & chives dumpling",
-        "description": "Pan fried wonton skin dumpling with marinated prawns, chives, red chillies & ginger",
+        "dish_id": "dish-0018",
+        "name": "Gamberoni a-la-plancha",
+        "description": "Cambay prawn cooked with confit tomatoes, garlic, thyme, cherry tomatoes & star anise",
         "dietary": "NON_VEG"
        }
       ]

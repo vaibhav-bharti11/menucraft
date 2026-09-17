@@ -49,20 +49,27 @@ try {
       '--disable-gpu',
       '--font-render-hinting=none',
       '--run-all-compositor-stages-before-draw',
+      '--disable-extensions',
+      '--disable-sync',
+      '--hide-scrollbars',
+      '--mute-audio',
+      '--no-first-run',
+      '--safebrowsing-disable-auto-update',
     ],
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1200, height: 1600, deviceScaleFactor: 2 });
+  // Increased deviceScaleFactor for better visual quality in the PDF
+  await page.setViewport({ width: 1200, height: 1600, deviceScaleFactor: 3 });
 
   // Use domcontentloaded for fast HTML rendering, followed by fonts ready
   await page.setContent(html, { waitUntil: 'domcontentloaded', timeout: 15000 });
 
-  // Wait for document fonts to be ready with a safety timeout
+  // Wait for document fonts to be ready with a safety timeout (properly awaiting the promise)
   try {
     await Promise.race([
-      page.evaluateHandle('document.fonts.ready'),
-      new Promise(resolve => setTimeout(resolve, 6000))
+      page.evaluate(() => document.fonts.ready),
+      new Promise(resolve => setTimeout(resolve, 3000))
     ]);
   } catch (fontErr) {
     console.warn('Font loading warning:', fontErr.message);
